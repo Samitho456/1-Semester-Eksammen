@@ -11,12 +11,25 @@ namespace hillerodLib
     {
         private Dictionary<int, Event> _events = new Dictionary<int, Event>();
 
+
+        // Adds an Event. TryAdd dosent throw an exception if the key already exists in the dictionary. Compared to add that does throw one  
         public void AddEvent(Event newEvent)
         {
             _events.TryAdd(newEvent.Id, newEvent);
         }
 
-        public bool DeleteEvent(int id, out Event deletedEvent)
+        // Deletes an Event. given the id is correct. can be used like so:
+
+        // if (eventRepo.DeleteEvent(1, out Event deletedEvent))
+        //{
+        //    Console.WriteLine($"Event deleted: ID = {deletedEvent.Id}, Name = {deletedEvent.Name}");
+        //}
+        //else
+        //{
+        //    Console.WriteLine("Event not found.");
+        //}
+
+public bool DeleteEvent(int id, out Event deletedEvent)
         {
             return _events.Remove(id, out deletedEvent);
         }
@@ -33,6 +46,7 @@ namespace hillerodLib
             return false;
         }
 
+        // returns all events in a list to be printed out
         public List<Event> GetAllEvents()
         {
             List<Event> events = new List<Event>();
@@ -42,6 +56,8 @@ namespace hillerodLib
             }
             return events;
         }
+
+        //returns an Event if Id exsist
         public Event GetEventById(int id)
         {
             if (_events.ContainsKey(id))
@@ -51,6 +67,8 @@ namespace hillerodLib
             return null!;
         }
 
+
+        // Search through _events's Values and if it exsist in the dictionary adds them to a list witch is then returned.
         public List<Event> SearchEventByName(string name)
         {
             List<Event> result = new List<Event>();
@@ -66,6 +84,7 @@ namespace hillerodLib
             return result;
         }
 
+        // Search through _events's Values and if it exsist in the dictionary adds them to a list witch is then returned.
         public List<Event> SearchEventByDate(string date)
         {
             List<Event> result = new List<Event>();
@@ -80,6 +99,8 @@ namespace hillerodLib
             }
             return result;
         }
+
+        // Search through _events's Values and if it exsist in the dictionary adds them to a list witch is then returned.
         public List<Event> SearchEventByDescription(string description)
         {
             List<Event> result = new List<Event>();
