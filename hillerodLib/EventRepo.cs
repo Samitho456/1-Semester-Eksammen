@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace hillerodLib
 {
@@ -25,21 +26,13 @@ namespace hillerodLib
             if (_events.ContainsKey(id))
             {
                 _events[id].Name = updateEvent.Name;
-                _events[id].DateAndTime = updateEvent.DateAndTime;
+                _events[id].Date = updateEvent.Date;
                 _events[id].Description = updateEvent.Description;
                 return true;
             }
             return false;
         }
 
-        public Event GetEventById(int id)
-        {
-            if (_events.ContainsKey(id))
-            {
-                return _events[id];
-            }
-            return null!;
-        }
         public List<Event> GetAllEvents()
         {
             List<Event> events = new List<Event>();
@@ -49,23 +42,57 @@ namespace hillerodLib
             }
             return events;
         }
+        public Event GetEventById(int id)
+        {
+            if (_events.ContainsKey(id))
+            {
+                return _events[id];
+            }
+            return null!;
+        }
 
-
-        // Search skal kunne gøres i gennem Name og DateAndTime måske description skal lige tænkes over
-        public List<Event> SearchEvent()
+        public List<Event> SearchEventByName(string name)
         {
             List<Event> result = new List<Event>();
 
-            foreach (var p in _events.Values)
+            foreach (var e in _events.Values)
             {
 
-                //if (p.Ingredient.ToLower().Contains(ingredient.ToLower()))
-                //{
-                //    result.Add(p);
-                //}
+                if (e.Name.ToLower().Contains(name.ToLower()))
+                {
+                    result.Add(e);
+                }
             }
             return result;
         }
 
+        public List<Event> SearchEventByDate(string date)
+        {
+            List<Event> result = new List<Event>();
+
+            foreach (var e in _events.Values)
+            {
+
+                if (e.Date.ToLower().Contains(date.ToLower()))
+                {
+                    result.Add(e);
+                }
+            }
+            return result;
+        }
+        public List<Event> SearchEventByDescription(string description)
+        {
+            List<Event> result = new List<Event>();
+
+            foreach (var e in _events.Values)
+            {
+
+                if (e.Description.ToLower().Contains(description.ToLower()))
+                {
+                    result.Add(e);
+                }
+            }
+            return result;
+        }
     }
 }
