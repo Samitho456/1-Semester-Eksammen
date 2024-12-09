@@ -8,7 +8,3 @@ eventRepo.AddEvent(new Event("Kamp", "8/10-25", "Vi kæmper om Dm"));
 
 
 
-foreach (var e in eventRepo.SearchEventByDate("17/7-25"))
-{
-    Console.WriteLine(e);
-}
