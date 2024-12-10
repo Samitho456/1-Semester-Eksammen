@@ -29,9 +29,9 @@ namespace hillerodLib
         //    Console.WriteLine("Event not found.");
         //}
 
-public bool DeleteEvent(int id, out Event deletedEvent)
+        public bool DeleteEvent(int id, out Event deletedEvent)
         {
-            return _events.Remove(id, out deletedEvent);
+               return _events.Remove(id, out deletedEvent);
         }
 
         public bool UpdateEvent(int id, Event updateEvent)
@@ -39,7 +39,8 @@ public bool DeleteEvent(int id, out Event deletedEvent)
             if (_events.ContainsKey(id))
             {
                 _events[id].Name = updateEvent.Name;
-                _events[id].Date = updateEvent.Date;
+                _events[id].DateStart = updateEvent.DateStart;
+                _events[id].DateEnd = updateEvent.DateEnd;
                 _events[id].Description = updateEvent.Description;
                 return true;
             }
@@ -85,18 +86,41 @@ public bool DeleteEvent(int id, out Event deletedEvent)
         }
 
         // Search through _events's Values and if it exsist in the dictionary adds them to a list witch is then returned.
-        public List<Event> SearchEventByDate(string date)
+        public List<Event> SearchEventByDate(DateTime date)
         {
+            
             List<Event> result = new List<Event>();
 
+            // Set time to 23:59:59, so if an Event happens doing the the its included.
+
+            if (date.Hour == 00)
+            {
+                date = date.AddHours(23);
+                date = date.AddMinutes(59);
+                date = date.AddSeconds(59);
+            }
             foreach (var e in _events.Values)
             {
 
-                if (e.Date.ToLower().Contains(date.ToLower()))
+                // Compare the time of our parameter with our start date and end date.
+                // CompareTo:
+                // if Less than zero (-1):
+                //          This instance is earlier than value.
+                // if Zero (0):
+                //          This instance is the same as value.
+                // if Greater than zero (1):
+                //          This instance is later than value.
+                // So when succes:
+                // (e.DateStart.CompareTo(date) needs to be -1 or 0 
+                // and 
+                // e.DateEnd.CompareTo(date) needs to be 1 or 0
+
+                if ((e.DateStart.CompareTo(date) <= 0 && e.DateEnd.CompareTo(date) >= 0))
                 {
                     result.Add(e);
                 }
             }
+
             return result;
         }
 
