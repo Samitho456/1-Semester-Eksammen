@@ -18,7 +18,10 @@ namespace hillerodLib
             _events.TryAdd(newEvent.Id, newEvent);
         }
 
-        // Deletes an Event. given the id is correct. can be used like so:
+        
+
+        // how to use the DeleteEvent in program.cs
+        // Deletes an Event. Given the id is correct. can be used like so:
 
         // if (eventRepo.DeleteEvent(1, out Event deletedEvent))
         //{
@@ -92,7 +95,6 @@ namespace hillerodLib
             List<Event> result = new List<Event>();
 
             // Set time to 23:59:59, so if an Event happens doing the the its included.
-
             if (date.Hour == 00)
             {
                 date = date.AddHours(23);
