@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace hillerodLib
 {
-
     public enum BoatType
     {
         SailBoat,
         MotorBoat,
         Dinghy,
         Yard
-
     }
 }

@@ -14,7 +14,6 @@ namespace hillerodLib
 
         // Så man kan tilføje en båd
         public void AddBoat(Boat boat)
-
         {
             _boatList.TryAdd(boat.Id, boat);
         }
@@ -23,7 +22,6 @@ namespace hillerodLib
         public bool DeleteBoat(int boatId, out Boat deleteBoat)
         {
             return _boatList.Remove(boatId, out deleteBoat);
-
         }
 
         // Så man kan opdatere en båd
@@ -39,20 +37,17 @@ namespace hillerodLib
                 _boatList[id].BuildingYear = boat.BuildingYear;
                 _boatList[id].Model = boat.Model;
             }
-
         }
 
         // Så man kan finde en båd på Id nummer
 
         public Boat GetBoatById(int id)
-
         {
             if (_boatList.ContainsKey(id))
             {
                 return _boatList[id];
             }
             return null;
-
 
          // Så man kan finde både ud fra type
 
@@ -61,21 +56,13 @@ namespace hillerodLib
                 List<Boat> list = new List<Boat>();
 
                 foreach (KeyValuePair<int, Boat> kvp in _boatList)
-
                 {
                     Boat boat = kvp.Value;
                     if (boat.Type == boatEnum)
                         list.Add(boat);
-
-
                 }
                 return list;
-
-
             }
-
-
         }
-
     }
 }
