@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace hillerodLib
 {
+    // Constructor
     public abstract class User
     {
         public int Id { get; set; }
