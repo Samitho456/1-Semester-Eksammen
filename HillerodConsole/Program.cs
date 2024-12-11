@@ -1,6 +1,13 @@
 ﻿using hillerodLib;
+using Microsoft.VisualBasic;
 
+// Creates a new instance of the EventRepo class, and adds events to the dictionary 
+EventRepo eventRepo = new EventRepo();
+eventRepo.AddEvent(new Event("Båd oprydning", new DateTime(2025, 12, 1, 11,30,0), new DateTime(2025, 12, 1, 17, 30, 0), "Vi skal ryder op på havnen")); // Event test
+eventRepo.AddEvent(new Event("SejlTur til Odense", new DateTime(2024, 12, 1, 12,00,0), new DateTime(2024, 12, 7, 12, 30, 0), "Vi tager en tur til Odense")); // Event test
+eventRepo.AddEvent(new Event("Kamp", new DateTime(2025, 7, 22,12, 00, 0), new DateTime(2025, 7, 29, 12,00,0), "Vi kæmper om Danmarks mesterskaberne")); // Event test
 
+// Creates a new instance of the MemberRepo class, and adds Members to the dictionary 
 MemberRepo memberRepo = new MemberRepo();
 Member member = new Member(1, "Thomas", "123@gmail.com", "12345678"); //create member test
 Member member1 = new Member(2, "Jens", "456@gmail.com", "87654321"); //create member test
