@@ -1,6 +1,12 @@
 ﻿using hillerodLib;
 using Microsoft.VisualBasic;
 
+// Creates a new instance of the BoatRepo class, and adds Boats to the dictionary 
+BoatRepo repo = new BoatRepo();
+repo.AddBoat(new(1, "Molly", "SailBoat", "Beneteau395", "395", "Yanmar 4JH4", "12", "2018"));
+repo.AddBoat(new(2, "Dori", "Sailboat", "Shantau245", "245", "Volvo 4kMA", "14", "2014"));
+repo.AddBoat(new(3, "Maren", "Sailboat", "Nimbus 405 Coupe", "N405", "2 x Volvo Penta 380HK", "16", "2020"));
+
 // Creates a new instance of the EventRepo class, and adds events to the dictionary 
 EventRepo eventRepo = new EventRepo();
 eventRepo.AddEvent(new Event("Båd oprydning", new DateTime(2025, 12, 1, 11,30,0), new DateTime(2025, 12, 1, 17, 30, 0), "Vi skal ryder op på havnen")); // Event test
@@ -14,6 +20,10 @@ Member member1 = new Member(2, "Jens", "456@gmail.com", "87654321"); //create me
 Member member2 = new Member(3, "thomas", "798@gmail.com", "94629562"); //create member test
 Member member3 = new Member(4, "dsfg", "asdfasdf8@gmail.com", "834257234"); //create member test
 
+
+
+
+// testing of Members
 foreach (Member m in memberRepo.GetAllMembers())
 {
     Console.WriteLine(m.ToString());
@@ -51,3 +61,4 @@ foreach (Member m in memberRepo.GetAllMembers())
 {
     Console.WriteLine(m.ToString());
 }
+
