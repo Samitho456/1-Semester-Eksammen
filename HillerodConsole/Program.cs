@@ -25,12 +25,23 @@ BookingRepo bookingRepo = new BookingRepo();
 bookingRepo.AddBooking(new Booking(new List<Member>() { member,member1}, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Ven"));
 bookingRepo.AddBooking(new Booking(new List<Member>() { member2, member3 }, new DateTime(2025, 7, 1, 11, 30, 0), new DateTime(2025, 7, 5, 12, 00, 0), "Odense"));
 
+#region Members that joins an event
+Console.WriteLine();
+eventRepo.GetEventById(1).MemberJoin(member);
+eventRepo.GetEventById(1).MemberJoin(member1);
+foreach (var mj in eventRepo.GetEventById(1).MemberJoined)
+{
+    Console.WriteLine(mj);
+}
+Console.WriteLine();
+#endregion
 
+#region testing booking
 foreach (var item in bookingRepo.GetAllBookings())
 {
     Console.WriteLine(item);
 }
-
+#endregion
 
 #region Testing Member
 foreach (Member m in memberRepo.GetAllMembers())

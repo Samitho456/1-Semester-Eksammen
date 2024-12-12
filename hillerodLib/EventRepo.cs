@@ -11,7 +11,6 @@ namespace hillerodLib
     {
         private Dictionary<int, Event> _events = new Dictionary<int, Event>();
 
-
         // Adds an Event. TryAdd dosent throw an exception if the key already exists in the dictionary. Compared to add that does throw one  
         public void AddEvent(Event newEvent)
         {
@@ -141,5 +140,6 @@ namespace hillerodLib
             }
             return result;
         }
+
     }
 }
