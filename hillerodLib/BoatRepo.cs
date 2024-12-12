@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace hillerodLib
+﻿namespace hillerodLib
 {
     public class BoatRepo
     {
@@ -29,6 +21,7 @@ namespace hillerodLib
         {
             if (_boatList.ContainsKey(id))
             {
+                // _boatList[id] = boat;
                 _boatList[id].Name = boat.Name;
                 _boatList[id].Engine = boat.Engine;
                 _boatList[id].SailNumber = boat.SailNumber;
@@ -48,21 +41,21 @@ namespace hillerodLib
                 return _boatList[id];
             }
             return null;
+        }
 
-         // Så man kan finde både ud fra type
+        // Så man kan finde både ud fra type
 
-            List<Boat> GetBoatByEnum(BoatType boatEnum)
+        public List<Boat> GetBoatByEnum(BoatType boatEnum)
+        {
+            List<Boat> list = new List<Boat>();
+
+            foreach (KeyValuePair<int, Boat> kvp in _boatList)
             {
-                List<Boat> list = new List<Boat>();
-
-                foreach (KeyValuePair<int, Boat> kvp in _boatList)
-                {
-                    Boat boat = kvp.Value;
-                    if (boat.Type == boatEnum)
-                        list.Add(boat);
-                }
-                return list;
+                Boat boat = kvp.Value;
+                if (boat.Type == boatEnum)
+                    list.Add(boat);
             }
+            return list;
         }
     }
 }
