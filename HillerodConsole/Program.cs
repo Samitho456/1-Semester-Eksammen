@@ -3,9 +3,9 @@ using Microsoft.VisualBasic;
 
 // Creates a new instance of the BoatRepo class, and adds Boats to the dictionary 
 BoatRepo repo = new BoatRepo();
-repo.AddBoat(new(1, "Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018"));
-repo.AddBoat(new(2, "Dori", BoatType.SailBoat, "Shantau245", "245", "Volvo 4kMA", 14, "2014"));
-repo.AddBoat(new(3, "Maren", BoatType.SailBoat, "Nimbus 405 Coupe", "N405", "2 x Volvo Penta 380HK", 16, "2020"));
+repo.AddBoat(new(1, "Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018")); // Boat test
+repo.AddBoat(new(2, "Dori", BoatType.SailBoat, "Shantau245", "245", "Volvo 4kMA", 14, "2014")); // Boat test
+repo.AddBoat(new(3, "Maren", BoatType.SailBoat, "Nimbus 405 Coupe", "N405", "2 x Volvo Penta 380HK", 16, "2020")); // Boat test
 
 // Creates a new instance of the EventRepo class, and adds events to the dictionary 
 EventRepo eventRepo = new EventRepo();
@@ -23,7 +23,7 @@ Member member3 = new Member(4, "dsfg", "asdfasdf8@gmail.com", "834257234"); //cr
 
 
 
-// testing of Members
+#region Testing Member
 foreach (Member m in memberRepo.GetAllMembers())
 {
     Console.WriteLine(m.ToString());
@@ -61,4 +61,4 @@ foreach (Member m in memberRepo.GetAllMembers())
 {
     Console.WriteLine(m.ToString());
 }
-//testing Member end
+#endregion
