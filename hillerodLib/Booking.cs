@@ -26,7 +26,12 @@ namespace hillerodLib
 
         public override string ToString()
         {
-            return $"Id: {Id}, Depature: {Depature}, Arrival: {Arrival}, Destanation {Destanation}";
+            string listMember = "";
+            foreach (Member m in Members) 
+            {
+                listMember += m.ToString() + "\n";
+            }
+            return $"Id: {Id}\nMembers: {listMember}, Depature: {Depature}, Arrival: {Arrival}, Destanation: {Destanation}";
         }
     }
 }
