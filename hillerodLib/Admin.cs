@@ -69,6 +69,29 @@ namespace hillerodLib
             return updatedMember;
         }
 
+        public DamageReport AddDamageReportInLog(Boat boat, DamageReport report)
+        {
+            boat.MaintenanceLog.AddReport(report);
+            return report;
+        }
+
+        public DamageReport UpdateDamageReportInLog(Boat boat, DamageReport report)
+        {
+            boat.MaintenanceLog.UpdateReport(report.Id, report);
+            return report;
+        }
+
+        public DamageReport DeleteDamageReportInLog(Boat boat, DamageReport report)
+        {
+            boat.MaintenanceLog.DeleteReport(report.Id,out report);
+            return report;
+        }
+
+        public DamageReport FindDamageReportInLog(Boat boat, DamageReport report)
+        {
+           return boat.MaintenanceLog.FindReportById(report.Id);
+        }
+
 
         public override string ToString()
         {

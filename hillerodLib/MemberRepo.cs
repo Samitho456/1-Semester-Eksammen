@@ -60,7 +60,8 @@ namespace hillerodLib
                 _repo[id].IsAdmin = updatedMember.IsAdmin;
                 return true;
             }
-            return false;
+            else
+                return false;
         }
 
         //deletes member by the given Id and returns a bool with an out of the deleted member

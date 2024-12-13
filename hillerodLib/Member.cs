@@ -14,6 +14,18 @@ namespace hillerodLib
             IsAdmin = false;
         }
 
+        public DamageReport AddDamageReport(Boat boat, DamageReport report)
+        {
+            boat.MaintenanceLog.AddReport(report);
+            return report;
+        }
+
+        public DamageReport UpdateDamageReport(Boat boat, DamageReport report)
+        {
+            boat.MaintenanceLog.UpdateReport(report.Id, report);
+            return report;
+        }
+
         public override string ToString()
         {
             return $"Id: {Id}, Name: {Name}, IsAdmin: {IsAdmin}, Email: {Email}, PhoneNumber: {PhoneNumber} ";
