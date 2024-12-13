@@ -40,10 +40,7 @@ namespace hillerodLib
         {
             if (_events.ContainsKey(id))
             {
-                _events[id].Name = updateEvent.Name;
-                _events[id].DateStart = updateEvent.DateStart;
-                _events[id].DateEnd = updateEvent.DateEnd;
-                _events[id].Description = updateEvent.Description;
+                _events[id] = updateEvent;
                 return true;
             }
             return false;
