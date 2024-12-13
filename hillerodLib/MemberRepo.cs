@@ -53,15 +53,10 @@ namespace hillerodLib
         {
             if (_repo.ContainsKey(id))
             {
-                _repo[id].Name = updatedMember.Name;
-                _repo[id].Id = updatedMember.Id;
-                _repo[id].Email = updatedMember.Email;
-                _repo[id].PhoneNumber = updatedMember.PhoneNumber;
-                _repo[id].IsAdmin = updatedMember.IsAdmin;
+                _repo[id] = updatedMember;
                 return true;
             }
-            else
-                return false;
+            return false;
         }
 
         //deletes member by the given Id and returns a bool with an out of the deleted member
