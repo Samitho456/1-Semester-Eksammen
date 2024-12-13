@@ -16,7 +16,7 @@ Member member3 = new Member(4, "dsfg", "asdfasdf8@gmail.com", "834257234"); //cr
 
 // Creates a new instance of the EventRepo class, and adds events to the dictionary 
 EventRepo eventRepo = new EventRepo();
-eventRepo.AddEvent(new Event("Båd oprydning", new DateTime(2025, 12, 1, 11, 30, 0), new DateTime(2025, 12, 1, 17, 30, 0), "Vi skal ryder op på havnen")); // Event test
+eventRepo.AddEvent(new Event("Båd oprydning", new DateTime(2025, 12, 1, 11, 30, 0), new DateTime(2025, 12, 1, 17, 30, 0), "Vi skal ryder op på havnen", 2)); // Event test
 eventRepo.AddEvent(new Event("SejlTur til Odense", new DateTime(2024, 12, 1, 12, 00, 0), new DateTime(2024, 12, 7, 12, 30, 0), "Vi tager en tur til Odense")); // Event test
 eventRepo.AddEvent(new Event("Kamp", new DateTime(2025, 7, 22, 12, 00, 0), new DateTime(2025, 7, 29, 12, 00, 0), "Vi kæmper om Danmarks mesterskaberne")); // Event test
 
@@ -25,60 +25,70 @@ BookingRepo bookingRepo = new BookingRepo();
 bookingRepo.AddBooking(new Booking(new List<Member>() { member,member1}, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Ven"));
 bookingRepo.AddBooking(new Booking(new List<Member>() { member2, member3 }, new DateTime(2025, 7, 1, 11, 30, 0), new DateTime(2025, 7, 5, 12, 00, 0), "Odense"));
 
-#region Members that joins an event
-Console.WriteLine();
-eventRepo.GetEventById(1).MemberJoin(member);
-eventRepo.GetEventById(1).MemberJoin(member1);
-foreach (var mj in eventRepo.GetEventById(1).MemberJoined)
-{
-    Console.WriteLine(mj);
-}
-Console.WriteLine();
-#endregion
 
-#region testing booking
-foreach (var item in bookingRepo.GetAllBookings())
+//Methode to test Members
+void TestMember()
 {
-    Console.WriteLine(item);
-}
-#endregion
+    //add member to repo
+    memberRepo.CreateMember(member);
+    memberRepo.CreateMember(member1);
+    memberRepo.CreateMember(member2);
 
-#region Testing Member
-foreach (Member m in memberRepo.GetAllMembers())
+    //print all members
+    Console.WriteLine("Printing all Members\n");
+    foreach (Member m in memberRepo.GetAllMembers())
+    {
+        Console.WriteLine(m.ToString());
+    }
+
+    //search member by id
+    Console.WriteLine("member by id: " + memberRepo.FindMemberById(2).ToString());
+
+    //filter members by name
+    Console.WriteLine("\n\nFilter by name thomas");
+    foreach (Member m in memberRepo.FilterMembersByName("thOmas"))
+    {
+        Console.WriteLine(m.ToString());
+    }
+    Console.WriteLine();
+
+
+    //print all members
+    foreach (Member m in memberRepo.GetAllMembers())
+    {
+        Console.WriteLine(m.ToString());
+    }
+
+    //updates member and print member list
+    Console.WriteLine("\nUpdate member");
+    memberRepo.UpdateMember(2, member3);
+
+    Console.WriteLine("List with updated member");
+    foreach (Member m in memberRepo.GetAllMembers())
+    {
+        Console.WriteLine(m.ToString());
+    }
+
+    //Delete member and print member list
+    Console.WriteLine("\nDeleted member");
+    memberRepo.DeleteMemberById(3);
+    foreach (Member m in memberRepo.GetAllMembers())
+    {
+        Console.WriteLine(m.ToString());
+    }
+}
+
+void TestBooking()
 {
-    Console.WriteLine(m.ToString());
+    foreach (var item in bookingRepo.GetAllBookings())
+    {
+        Console.WriteLine(item);
+    }
 }
 
-memberRepo.CreateMember(member);
-memberRepo.CreateMember(member2);
-memberRepo.CreateMember(member1);
-
-Console.WriteLine("member by id: " + memberRepo.FindMemberById(2).ToString());
-Console.WriteLine("\nFilter by name thomas");
-foreach (Member m in memberRepo.FilterMembersByName("thOmas"))
+void TestEvent()
 {
-    Console.WriteLine(m.ToString());
+    eventRepo.GetEventById(1).Members.AddEventMember(member);
+    eventRepo.GetEventById(1).Members.AddEventMember(member1);
+    eventRepo.GetEventById(1).Members.AddEventMember(member2);
 }
-Console.WriteLine();
-
-foreach (Member m in memberRepo.GetAllMembers())
-{
-    Console.WriteLine(m.ToString());
-}
-Console.WriteLine();
-
-Console.WriteLine("\nUpdate member");
-memberRepo.UpdateMember(2, member3);
-foreach (Member m in memberRepo.GetAllMembers())
-{
-    Console.WriteLine(m.ToString());
-}
-Console.WriteLine();
-
-Console.WriteLine("\nDeleted member");
-memberRepo.DeleteMember(3, out member3);
-foreach (Member m in memberRepo.GetAllMembers())
-{
-    Console.WriteLine(m.ToString());
-}
-#endregion

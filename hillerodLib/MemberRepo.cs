@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace hillerodLib
+﻿namespace hillerodLib
 {
     public class MemberRepo
     {
-        private  Dictionary<int, Member> _repo = new Dictionary<int, Member>();
+        private List<Member> _repo = new List<Member>();
 
         // Constructor
         public MemberRepo() { }
@@ -17,14 +11,20 @@ namespace hillerodLib
         // Key is the Members Id and value is the member
         public void CreateMember(Member member)
         {
-            _repo.Add(member.Id, member);
+            _repo.Add(member);
         }
 
         // Find a Member by the members Id and return the member object
-        public Member FindMemberById(int id) 
+        public Member FindMemberById(int id)
         {
-            _repo.TryGetValue(id, out Member member);
-            return member;
+            Member foundMember = null;
+            foreach (Member member in _repo)
+            {
+                if (member.Id == id)
+                    foundMember = member;
+            }
+            return foundMember;
+
         }
 
         // Gets a list of all the members with a given name
@@ -32,7 +32,7 @@ namespace hillerodLib
         {
             string filterName = name.ToLower().Trim();
             List<Member> members = new List<Member>();
-            foreach (Member member in _repo.Values)
+            foreach (Member member in _repo)
             {
                 if (member.Name.ToLower().Trim() == filterName)
                 {
@@ -45,24 +45,39 @@ namespace hillerodLib
         // Returns a List of all members
         public List<Member> GetAllMembers()
         {
-            return _repo.Values.ToList();
+            return _repo;
         }
 
         // Updates a member with given Id to a new member
         public bool UpdateMember(int id, Member updatedMember)
         {
-            if (_repo.ContainsKey(id))
+            foreach (Member member in _repo)
             {
-                _repo[id] = updatedMember;
-                return true;
+                if (member.Id == id)
+                {
+
+                    member.Id = updatedMember.Id;
+                    member.Name = updatedMember.Name;
+                    member.Email = updatedMember.Email;
+                    member.PhoneNumber = updatedMember.PhoneNumber;
+                    return true;
+                }
             }
             return false;
         }
 
         //deletes member by the given Id and returns a bool with an out of the deleted member
-        public bool DeleteMember(int id, out Member member)
+        public bool DeleteMemberById(int id)
         {
-            return _repo.Remove(id, out member);
+            foreach (Member m in _repo)
+            {
+                if (m.Id == id)
+                {
+                    _repo.Remove(m);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
