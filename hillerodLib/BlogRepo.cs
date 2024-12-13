@@ -45,10 +45,11 @@ namespace hillerodLib
                 return _blogList[id];
             }
             return null;
-
+        }
             // Så man kan finde blogs ud fra type
 
-            List<Blog> GetBlogByEnum(BlogType blogEnum, Blog blog)
+
+           public List<Blog> GetBlogByEnum(BlogType blogEnum, Blog blog)
             {
                 List<Blog> list = new List<Blog>();
 
@@ -60,6 +61,6 @@ namespace hillerodLib
                 }
                 return list;
             }
-        }
+        
     }
 }
