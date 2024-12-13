@@ -5,7 +5,7 @@
         public List<Member> Members { get; } = new List<Member>();
         public Event CurrentEvent { get; }
         public int MaxAmount { get; set; }
-
+        
         public EventMembers()
         {
             MaxAmount = 99999999;
@@ -16,9 +16,7 @@
             MaxAmount = max;
         }
 
-        public void AddEventMember(Member member)
         {
-            if (!Members.Contains(member) && Members.Count < MaxAmount)
             {
                 Members.Add(member);
             }
