@@ -49,12 +49,19 @@ namespace hillerodLib
         }
 
         // Updates a member with given Id to a new member
-        public void UpdateMember(int id, Member member)
+        public bool UpdateMember(int id, Member updatedMember)
         {
             if (_repo.ContainsKey(id))
             {
-                _repo[id] = member;
+                _repo[id].Name = updatedMember.Name;
+                _repo[id].Id = updatedMember.Id;
+                _repo[id].Email = updatedMember.Email;
+                _repo[id].PhoneNumber = updatedMember.PhoneNumber;
+                _repo[id].IsAdmin = updatedMember.IsAdmin;
+                return true;
             }
+            else
+                return false;
         }
 
         //deletes member by the given Id and returns a bool with an out of the deleted member
