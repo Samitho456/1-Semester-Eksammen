@@ -9,7 +9,7 @@ namespace hillerodLib
     public class Admin : User
 
     {
-        public Admin(int id, string name, string email, string phonenumber) : base (id, name, email, phonenumber) 
+        public Admin(string name, string email, string phonenumber) : base (name, email, phonenumber) 
         {
             IsAdmin = true;
         }

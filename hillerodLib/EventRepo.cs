@@ -85,20 +85,18 @@ namespace hillerodLib
         }
 
         // Search through _events's Values and if it exsist in the dictionary adds them to a list witch is then returned.
-        public List<Event> SearchEventByDate(DateTime date)
+        public List<Event> SearchEventsByDateTime(DateOnly date)
         {
             
             List<Event> result = new List<Event>();
 
-            // Set time to 23:59:59, so if an Event happens doing the the its included.
-            if (date.Hour == 00)
+            foreach (Event e in _events.Values)
             {
-                date = date.AddHours(23);
-                date = date.AddMinutes(59);
-                date = date.AddSeconds(59);
-            }
-            foreach (var e in _events.Values)
-            {
+
+                // comment ///
+                DateOnly dateOnlyStart = DateOnly.FromDateTime(e.DateStart);
+                DateOnly dateOnlyEnd = DateOnly.FromDateTime(e.DateEnd);
+
 
                 // Compare the time of our parameter with our start date and end date.
                 // CompareTo:
@@ -113,7 +111,9 @@ namespace hillerodLib
                 // and 
                 // e.DateEnd.CompareTo(date) needs to be 1 or 0
 
-                if ((e.DateStart.CompareTo(date) <= 0 && e.DateEnd.CompareTo(date) >= 0))
+
+
+                if ((dateOnlyStart.CompareTo(date) <= 0 && dateOnlyEnd.CompareTo(date) >= 0))
                 {
                     result.Add(e);
                 }

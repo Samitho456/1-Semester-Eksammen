@@ -9,10 +9,10 @@ repo.AddBoat(new(3, "Maren", BoatType.SailBoat, "Nimbus 405 Coupe", "N405", "2 x
 
 // Creates a new instance of the MemberRepo class, and adds Members to the dictionary 
 MemberRepo memberRepo = new MemberRepo();
-Member member = new Member(1, "Thomas", "123@gmail.com", "12345678"); //create member test
-Member member1 = new Member(2, "Jens", "456@gmail.com", "87654321"); //create member test
-Member member2 = new Member(3, "thomas", "798@gmail.com", "94629562"); //create member test
-Member member3 = new Member(4, "dsfg", "asdfasdf8@gmail.com", "834257234"); //create member test
+Member member = new Member("Thomas", "123@gmail.com", "12345678"); //create member test
+Member member1 = new Member("Jens", "456@gmail.com", "87654321"); //create member test
+Member member2 = new Member("thomas", "798@gmail.com", "94629562"); //create member test
+Member member3 = new Member("dsfg", "asdfasdf8@gmail.com", "834257234"); //create member test
 
 // Creates a new instance of the EventRepo class, and adds events to the dictionary 
 EventRepo eventRepo = new EventRepo();
@@ -24,6 +24,15 @@ eventRepo.AddEvent(new Event("Kamp", new DateTime(2025, 7, 22, 12, 00, 0), new D
 BookingRepo bookingRepo = new BookingRepo();
 bookingRepo.AddBooking(new Booking(new List<Member>() { member,member1}, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Ven"));
 bookingRepo.AddBooking(new Booking(new List<Member>() { member2, member3 }, new DateTime(2025, 7, 1, 11, 30, 0), new DateTime(2025, 7, 5, 12, 00, 0), "Odense"));
+
+
+#region Test EventRepo
+
+foreach (var item in eventRepo.SearchEventsByDateTime(new DateOnly(2025, 12, 1)))
+{
+    Console.WriteLine(item);
+}
+#endregion
 
 #region Members that joins an event
 Console.WriteLine();
