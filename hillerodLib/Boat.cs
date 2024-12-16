@@ -30,6 +30,7 @@ namespace hillerodLib
             BuildingYear = buildYear;
             MaintenanceLog = new MaintenanceLog();
         }
+        //Uses the DamnageReport Class Methods to perform Crud operations on its maintenance log
 
         public DamageReport AddDamageReport(DamageReport report)
         {
@@ -50,6 +51,8 @@ namespace hillerodLib
             MaintenanceLog.DeleteReport(report.Id, out report);
             return report;
         }
+
+
 
         public override string ToString()
         {

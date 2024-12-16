@@ -5,42 +5,42 @@
         private Dictionary<int, Boat> _boatList = new Dictionary<int, Boat>();
 
         // Så man kan tilføje en båd
+        // Throws an exception if the Boat object already exists. 
         public void AddBoat(Boat boat)
         {
-            _boatList.TryAdd(boat.Id, boat);
+            if (!_boatList.TryAdd(boat.Id, boat))
+                throw new BadBoat.DuplicateBoatId($"Boat with ID {boat.Id} already exists.");
         }
 
         // Så man kan slette en båd
+        // Uses the GetBoatById method to ensure correct arguments
         public bool DeleteBoat(int boatId, out Boat deleteBoat)
         {
+            
+            GetBoatById(boatId);
             return _boatList.Remove(boatId, out deleteBoat);
         }
 
         // Så man kan opdatere en båd
+        // Uses the GetBoatById method to ensure correct arguments
+        // Deletes the old boat from the dictionary and adds the updated version. This ensures that the dictionary key is always equal to the Boat objects ID.
         public void UpdateBoat(int id, Boat boat)
         {
-            if (_boatList.ContainsKey(id))
-            {
-                // _boatList[id] = boat;
-                _boatList[id].Name = boat.Name;
-                _boatList[id].Engine = boat.Engine;
-                _boatList[id].SailNumber = boat.SailNumber;
-                _boatList[id].Type = boat.Type;
-                _boatList[id].Measures = boat.Measures;
-                _boatList[id].BuildingYear = boat.BuildingYear;
-                _boatList[id].Model = boat.Model;
-            }
+            GetBoatById(id);
+            Boat oldBoat = GetBoatById(id);
+            DeleteBoat(id,out oldBoat);
+            _boatList.Add(boat.Id, boat);
         }
 
         // Så man kan finde en båd på Id nummer
-
+        // Throws an exception if the argument doesnt exist
         public Boat GetBoatById(int id)
         {
-            if (_boatList.ContainsKey(id))
+            if (!_boatList.ContainsKey(id))
             {
-                return _boatList[id];
+                throw new BadBoat.FaultyId($"Boat with ID {id} doesn't exist");
             }
-            return null;
+            return _boatList[id];
         }
 
         // Så man kan finde både ud fra type
@@ -56,6 +56,12 @@
                     list.Add(boat);
             }
             return list;
+
+        }
+        // Method to get all Boat objects in List form.
+        public List<Boat> GetAllBoats()
+        {
+            return _boatList.Values.ToList();
         }
     }
 }
