@@ -8,7 +8,6 @@
         public MemberRepo() { }
 
         // Add a member to Dictionary
-        // Key is the Members Id and value is the member
         public void CreateMember(Member member)
         {
             _repo.Add(member);
@@ -48,7 +47,7 @@
             return _repo;
         }
 
-        // Updates a member with given Id to a new member
+        // Updates a member with given Id to a new member. returns true if update was succesful
         public bool UpdateMember(int id, Member updatedMember)
         {
             foreach (Member member in _repo)
@@ -66,7 +65,7 @@
             return false;
         }
 
-        //deletes member by the given Id and returns a bool with an out of the deleted member
+        //deletes member by the given Id and returns a bool. returns true if delete was succesful
         public bool DeleteMemberById(int id)
         {
             foreach (Member m in _repo)
