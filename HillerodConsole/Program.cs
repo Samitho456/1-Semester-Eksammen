@@ -13,23 +13,47 @@ repo.AddBoat(new(2, "Dori", BoatType.SailBoat, "Shantau245", "245", "Volvo 4kMA"
 repo.AddBoat(new(3, "Maren", BoatType.SailBoat, "Nimbus 405 Coupe", "N405", "2 x Volvo Penta 380HK", 16, "2020")); // Boat test
 
 // Adds Members to the repo
-Member member = new Member(1, "Thomas", "123@gmail.com", "12345678"); //create member test
-Member member1 = new Member(2, "Jens", "456@gmail.com", "87654321"); //create member test
-Member member2 = new Member(3, "thomas", "798@gmail.com", "94629562"); //create member test
-Member member3 = new Member(4, "dsfg", "asdfasdf8@gmail.com", "834257234"); //create member test
+memberRepo.CreateMember(new Member("Thomas", "123@gmail.com", "12345678"));
+memberRepo.CreateMember(new Member("Jens", "456@gmail.com", "87654321"));
+memberRepo.CreateMember(new Member("thomas", "798@gmail.com", "94629562"));
+memberRepo.CreateMember(new Member("dsfg", "asdfasdf8@gmail.com", "834257234"));
+
+// Add booking to the repo
+bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(1), memberRepo.FindMemberById(2)}, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Ven"));
+bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(3), memberRepo.FindMemberById(4)}, new DateTime(2025, 7, 1, 11, 30, 0), new DateTime(2025, 7, 5, 12, 00, 0), "Odense"));
 
 
-bookingRepo.AddBooking(new Booking(new List<Member>() { member,member1}, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Ven"));
-bookingRepo.AddBooking(new Booking(new List<Member>() { member2, member3 }, new DateTime(2025, 7, 1, 11, 30, 0), new DateTime(2025, 7, 5, 12, 00, 0), "Odense"));
+// Function that runs the user imput to test tests
+void RunTest()
+{
+    Console.WriteLine("What do you want to test?");
+    Console.WriteLine("\n1. Member/MemberRepo");
+    Console.WriteLine("\n2. Booking/BookingRepo");
+    Console.WriteLine("\n3. Events/EventRepo");
+
+    int classTest = Int32.Parse(Console.ReadLine());
+
+    switch (classTest)
+    {
+        case 1:
+            TestMember();
+            break;
+        case 2:
+            TestBooking();
+            break;
+        case 3:
+            TestEvent();
+            break;
+        default:
+            RunTest();
+            break;
+    }
+}
 
 
-//Methode to test Members
+// Function to test Members
 void TestMember()
 {
-    //add member to repo
-    memberRepo.CreateMember(member);
-    memberRepo.CreateMember(member1);
-    memberRepo.CreateMember(member2);
 
     //print all members
     Console.WriteLine("Printing all Members\n");
@@ -57,8 +81,10 @@ void TestMember()
     }
 
     //updates member and print member list
+
+    Member updatedmember = new("new member", "newmember.dk@gmail.com", "12312332")
     Console.WriteLine("\nUpdate member");
-    memberRepo.UpdateMember(2, member3);
+    memberRepo.UpdateMember(2, updatedmember);
 
     Console.WriteLine("List with updated member");
     foreach (Member m in memberRepo.GetAllMembers())
@@ -75,6 +101,7 @@ void TestMember()
     }
 }
 
+// Function to test Booking
 void TestBooking()
 {
     foreach (var item in bookingRepo.GetAllBookings())
@@ -83,6 +110,7 @@ void TestBooking()
     }
 }
 
+// Function to test Events
 void TestEvent()
 {
     //add events to repo

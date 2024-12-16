@@ -9,7 +9,7 @@ namespace hillerodLib
     public class Member : User
     {
         // Constructor
-        public Member(int id, string name, string email, string phonenumber) : base (id,  name, email, phonenumber)
+        public Member(string name, string email, string phonenumber) : base (name, email, phonenumber)
         { 
             IsAdmin = false;
         }
