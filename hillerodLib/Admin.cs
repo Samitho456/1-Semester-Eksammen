@@ -61,7 +61,7 @@ namespace hillerodLib
         {
             //memberRepo.DeleteMember(id,out badMember);
             memberRepo.DeleteMemberById(badMember.Id);
-            memberRepo.DeleteMember(id,out badMember);
+            //memberRepo.DeleteMember(id,out badMember);
             return badMember;
         }
 
@@ -94,6 +94,14 @@ namespace hillerodLib
            return boat.MaintenanceLog.FindReportById(report.Id);
         }
 
+        public bool BoatIsHome(Boat boat)
+        {
+            if (boat == null)
+            {
+                return false;
+            }       
+            return boat.IsAvailable = true;
+        }
 
         public override string ToString()
         {

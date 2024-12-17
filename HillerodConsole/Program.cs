@@ -2,8 +2,6 @@
 using Microsoft.VisualBasic;
 
 
-
-
 //intialize repos
 MemberRepo memberRepo = new MemberRepo();
 EventRepo eventRepo = new EventRepo();
@@ -134,9 +132,9 @@ void TestBooking()
     }
 
     //update Booking
-    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(1), memberRepo.FindMemberById(2) }, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Ven"));
+    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(1), memberRepo.FindMemberById(2) }, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Ven", boatRepo.GetBoatById(1)));
     Console.WriteLine($"\nFinding a booking by {bookingRepo.GetBookingById(3)} \n");
-    bookingRepo.UpdateBooking(3, new Booking(new List<Member>() { memberRepo.FindMemberById(2), memberRepo.FindMemberById(3) }, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Berlin"));
+    bookingRepo.UpdateBooking(3, new Booking(new List<Member>() { memberRepo.FindMemberById(2), memberRepo.FindMemberById(3) }, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Berlin", boatRepo.GetBoatById(2)));
     Console.WriteLine($"\nFinding a booking by {bookingRepo.GetBookingById(3)}");
 
 
@@ -229,8 +227,8 @@ void PopulateRepos()
     memberRepo.CreateMember(new Member("dsfg", "asdfasdf8@gmail.com", "834257234"));
 
     // Add booking to the repo
-    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(1), memberRepo.FindMemberById(2) }, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Ven"));
-    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(3), memberRepo.FindMemberById(4) }, new DateTime(2025, 7, 1, 11, 30, 0), new DateTime(2025, 7, 5, 12, 00, 0), "Odense"));
+    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(1), memberRepo.FindMemberById(2) }, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Ven", boatRepo.GetBoatById(1)));
+    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(3), memberRepo.FindMemberById(4) }, new DateTime(2025, 7, 1, 11, 30, 0), new DateTime(2025, 7, 5, 12, 00, 0), "Odense", boatRepo.GetBoatById(3)));
 
     //add events to repo
     eventRepo.AddEvent(new Event("Båd oprydning", new DateTime(2025, 12, 1, 11, 30, 0), new DateTime(2025, 12, 1, 17, 30, 0), "Vi skal ryder op på havnen")); // Event test
@@ -270,6 +268,9 @@ Member deletionMember = new Member("Zikki", "zikke@gmail.com", "12132025");
 Event testEvent = new Event("Test Event", new DateTime(2025, 1, 1), new DateTime(2025, 1, 2), "Test Description");
 Event updatedEvent = new Event("Updated Event", new DateTime(2025, 2, 1), new DateTime(2025, 2, 2), "Updated Description");
 Event deletionEvent = new Event("Event for deletion", new DateTime(2025, 5, 1), new DateTime(2025, 6, 1), "Event for deletion test");
+#endregion
+#region Booking objects
+Booking adminTestBooking = new Booking(new List<Member>() { adminMember }, new DateTime(2025, 1, 1), new DateTime(2025, 2, 1), "Test destanation", adminBoat1);
 #endregion
 Console.WriteLine("Testing Admin Class Methods with Exception Handling\n");
 #region Event Exception Testing 
@@ -522,7 +523,11 @@ if (currentReports2.Count == 0)
     Console.WriteLine("MaintenanceLog is empty");
 }
 
-
+//Boat available
+Console.WriteLine("Availablity of boat");
+Console.WriteLine(adminBoat1.IsAvailable.ToString());
+admin.BoatIsHome(adminBoat1);
+Console.WriteLine(adminBoat1.IsAvailable.ToString());
 
 
 #endregion

@@ -16,6 +16,7 @@ namespace hillerodLib
         public string Engine { get; set; }
         public int Measures { get; set; }
         public string BuildingYear { get; set; }
+        public bool IsAvailable { get; set; }
         public MaintenanceLog MaintenanceLog { get; set; }
 
         public Boat (int id, string name, BoatType type, string model, string sailNumber, string engine, int measures, string buildYear)
@@ -29,6 +30,7 @@ namespace hillerodLib
             Measures = measures;
             BuildingYear = buildYear;
             MaintenanceLog = new MaintenanceLog();
+            IsAvailable = true;
         }
         //Uses the DamnageReport Class Methods to perform Crud operations on its maintenance log
 
