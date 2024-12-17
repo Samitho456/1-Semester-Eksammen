@@ -11,9 +11,12 @@ namespace hillerodLib
         private Dictionary<int,Booking> _bookings = new Dictionary<int,Booking>();
 
         // Adds a booking too _bookings Dictionary
-        public void AddBooking(Booking newBooking)
+        public bool AddBooking(Booking newBooking)
         {
-            _bookings.TryAdd(newBooking.Id, newBooking);
+            if(_bookings[newBooking.Id].Boat.IsAvailable = true) { 
+                return _bookings.TryAdd(newBooking.Id, newBooking);
+            }
+            return false;
         }
         // Deletes a Booking
         public bool DeleteBooking(int id, out Booking deletedBooking)
