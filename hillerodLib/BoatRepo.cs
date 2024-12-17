@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace hillerodLib
+﻿namespace hillerodLib
 {
     public class BoatRepo
     {
@@ -29,8 +21,13 @@ namespace hillerodLib
         {
             if (_boatList.ContainsKey(id))
             {
-                _boatList[id] = boat;
-                
+                _boatList[id].Name = boat.Name;
+                _boatList[id].Engine = boat.Engine;
+                _boatList[id].SailNumber = boat.SailNumber;
+                _boatList[id].Type = boat.Type;
+                _boatList[id].Measures = boat.Measures;
+                _boatList[id].BuildingYear = boat.BuildingYear;
+                _boatList[id].Model = boat.Model;
             }
         }
 
@@ -44,20 +41,21 @@ namespace hillerodLib
                 return _boatList[id];
             }
             return null;
-        }
-         // Find a boat by type, and return a list of boats by that type
 
-        public List<Boat> GetBoatByEnum(BoatType boatEnum)
-        {
-            List<Boat> result = new List<Boat>();
+         // Så man kan finde både ud fra type
 
-            foreach (Boat boat in _boatList.Values)
+            List<Boat> GetBoatByEnum(BoatType boatEnum)
             {
-                if (boat.Type == boatEnum)
-                    result.Add(boat);
-            }
-            return result;
-        }
+                List<Boat> list = new List<Boat>();
 
+                foreach (KeyValuePair<int, Boat> kvp in _boatList)
+                {
+                    Boat boat = kvp.Value;
+                    if (boat.Type == boatEnum)
+                        list.Add(boat);
+                }
+                return list;
+            }
+        }
     }
 }

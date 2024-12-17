@@ -1,33 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace hillerodLib
+﻿namespace hillerodLib
 {
     public class MemberRepo
     {
-        private  Dictionary<int, Member> Repo = new Dictionary<int, Member>();
+        private List<Member> _repo = new List<Member>();
 
+        // Constructor
         public MemberRepo() { }
 
+        // Add a member to Dictionary
         public void CreateMember(Member member)
         {
-            Repo.Add(member.Id, member);
+            _repo.Add(member);
         }
 
-        public Member FindMemberById(int id) 
+        // Find a Member by the members Id and return the member object
+        public Member FindMemberById(int id)
         {
-            Repo.TryGetValue(id, out Member member);
-            return member;
+            Member foundMember = null;
+            foreach (Member member in _repo)
+            {
+                if (member.Id == id)
+                    foundMember = member;
+            }
+            return foundMember;
+
         }
 
+        // Gets a list of all the members with a given name
         public List<Member> FilterMembersByName(string name)
         {
             string filterName = name.ToLower().Trim();
             List<Member> members = new List<Member>();
-            foreach (Member member in Repo.Values)
+            foreach (Member member in _repo)
             {
                 if (member.Name.ToLower().Trim() == filterName)
                 {
@@ -37,23 +41,42 @@ namespace hillerodLib
             return members;
         }
 
+        // Returns a List of all members
         public List<Member> GetAllMembers()
         {
-            return Repo.Values.ToList();
+            return _repo;
         }
 
-        public void UpdateMember(int id, Member member)
+        // Updates a member with given Id to a new member. returns true if update was succesful
+        public bool UpdateMember(int id, Member updatedMember)
         {
-            if (Repo.ContainsKey(id))
+            foreach (Member member in _repo)
             {
-                Repo[id] = member;
+                if (member.Id == id)
+                {
+
+                    member.Id = updatedMember.Id;
+                    member.Name = updatedMember.Name;
+                    member.Email = updatedMember.Email;
+                    member.PhoneNumber = updatedMember.PhoneNumber;
+                    return true;
+                }
             }
+            return false;
         }
 
-        public Member DeleteMember(int id) { 
-            Repo.TryGetValue(id, out Member member);
-            Repo.Remove(id);
-            return member;
+        //deletes member by the given Id and returns a bool. returns true if delete was succesful
+        public bool DeleteMemberById(int id)
+        {
+            foreach (Member m in _repo)
+            {
+                if (m.Id == id)
+                {
+                    _repo.Remove(m);
+                    return true;
+                }
             }
+            return false;
+        }
     }
 }
