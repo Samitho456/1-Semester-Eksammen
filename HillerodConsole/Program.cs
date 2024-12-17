@@ -9,7 +9,7 @@ BoatRepo boatRepo = new BoatRepo();
 
 // Creates a new instance of the EventRepo class, and adds events to the dictionary 
 RunTest();
-//PopulateRepos();
+
 
 
 // Function that runs the user imput to test tests
@@ -205,6 +205,7 @@ void TestEvent()
     }
 }
 
+// Function to test MemberEvent
 void TestMemberEvent()
 {
 
@@ -219,6 +220,7 @@ void TestMemberEvent()
     Console.WriteLine();
 }
 
+// adds to Repos
 void PopulateRepos()
 {
     // Adds Boats to the repo
@@ -245,6 +247,7 @@ void PopulateRepos()
 
 }
 
+// Function to test Admin
 void TestAdmin()
 {
     #region Admin
