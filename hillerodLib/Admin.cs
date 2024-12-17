@@ -59,7 +59,7 @@ namespace hillerodLib
 
         public Member DeleteMemberInRepo(Member badMember, MemberRepo memberRepo)
         {
-            memberRepo.DeleteMember(badMember.Id,out badMember);
+            memberRepo.DeleteMemberById(badMember.Id);
             return badMember;
         }
 
