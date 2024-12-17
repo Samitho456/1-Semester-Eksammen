@@ -26,6 +26,8 @@ namespace hillerodLib
         {
             if (_bookings.ContainsKey(id))
             {
+                int temp = _bookings[id].Id;
+                updateBooking.Id = temp;
                 _bookings[id] = updateBooking;
                 return true;
             }

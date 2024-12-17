@@ -29,9 +29,9 @@ namespace hillerodLib
             string listMember = "";
             foreach (Member m in Members) 
             {
-                listMember += m.ToString() + "\n";
+                listMember += m.Name.ToString() + ",";
             }
-            return $"Id: {Id}\nMembers: {listMember}, Depature: {Depature}, Arrival: {Arrival}, Destanation: {Destanation}";
+            return $"Id: {Id}\nMembers: {listMember} Depature: {Depature}, Arrival: {Arrival}, Destanation: {Destanation}";
         }
     }
 }
