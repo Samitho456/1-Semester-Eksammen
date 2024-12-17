@@ -10,7 +10,7 @@ namespace hillerodLib
     {
         private Dictionary<int,Booking> _bookings = new Dictionary<int,Booking>();
 
-        // Adds a booking too _bookings Dictionary
+        // Adds a booking too _bookings Dictionary if boat is available
         public bool AddBooking(Booking newBooking)
         {
             if(_bookings[newBooking.Id].Boat.IsAvailable = true) { 
