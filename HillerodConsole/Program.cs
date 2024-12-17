@@ -15,9 +15,6 @@ Admin admin = new Admin("Henrik", "758@gmail.com", "98723141");
 // Creates a new instance of the EventRepo class, and adds events to the dictionary 
 PopulateRepos();
 
-TestEvent();
-
-
 // Function that runs the user imput to test tests
 void RunTest()
 {
