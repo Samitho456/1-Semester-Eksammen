@@ -8,6 +8,9 @@ using Microsoft.VisualBasic;
 MemberRepo memberRepo = new MemberRepo();
 EventRepo eventRepo = new EventRepo();
 BookingRepo bookingRepo = new BookingRepo();
+BoatRepo boatRepo = new BoatRepo();
+// Creates an Admin object
+Admin admin = new Admin("Henrik", "758@gmail.com", "98723141");
 
 // Creates a new instance of the EventRepo class, and adds events to the dictionary 
 PopulateRepos();
@@ -187,10 +190,9 @@ void PopulateRepos()
     eventRepo.AddEvent(new Event("Kamp", new DateTime(2025, 7, 22, 12, 00, 0), new DateTime(2025, 7, 29, 12, 00, 0), "Vi kæmper om Danmarks mesterskaberne")); // Event test
     eventRepo.AddEvent(new Event("Sommerfest", new DateTime(2024, 6, 15, 15, 00, 0), new DateTime(2024, 6, 15, 23, 00, 0), "Vi holder en hyggelig sommerfest med grill og musik")); // Event test
     eventRepo.AddEvent(new Event("Træningslejr", new DateTime(2024, 8, 10, 8, 00, 0), new DateTime(2024, 8, 15, 18, 00, 0), "Intensiv træningslejr for alle medlemmer")); // Event test
-    // Creates an Admin object
-    Admin admin = new Admin("Henrik", "758@gmail.com", "98723141");
+    
 }
-#endregion
+
 
 #region Admin
 // Create repositories
