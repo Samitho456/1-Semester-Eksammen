@@ -11,39 +11,35 @@ namespace hillerodLib
     {
         private Dictionary<int, Event> _events = new Dictionary<int, Event>();
 
-        // Adds an Event. TryAdd dosent throw an exception if the key already exists in the dictionary. Compared to add that does throw one  
+        // Adds an Event. Throws an exception if an Event object's id is already in the Repo.  
         public void AddEvent(Event newEvent)
         {
-            _events.TryAdd(newEvent.Id, newEvent);
+            if(!_events.TryAdd(newEvent.Id, newEvent))
+                throw new BadEvent.DuplicateEvent($"Event with ID {newEvent.Id} aklready exists.");
+
         }
 
         
 
-        // how to use the DeleteEvent in program.cs
-        // Deletes an Event. Given the id is correct. can be used like so:
-
-        // if (eventRepo.DeleteEvent(1, out Event deletedEvent))
-        //{
-        //    Console.WriteLine($"Event deleted: ID = {deletedEvent.Id}, Name = {deletedEvent.Name}");
-        //}
-        //else
-        //{
-        //    Console.WriteLine("Event not found.");
-        //}
-
+        //Deletes an Event from the EventRepo
+        // Ensures correct arguments by calling the GetEventById method
         public bool DeleteEvent(int id, out Event deletedEvent)
         {
-               return _events.Remove(id, out deletedEvent);
+            GetEventById(id);   
+            return _events.Remove(id, out deletedEvent);
         }
 
+        // Ensures correct arguments by calling the GetEventById method
+        // Deletes the old Event from the Repo and adds the updated version. This ensures that the dictionary key is always equal to the Event object's ID.
         public bool UpdateEvent(int id, Event updateEvent)
         {
-            if (_events.ContainsKey(id))
-            {
-                _events[id] = updateEvent;
-                return true;
-            }
-            return false;
+            GetEventById(id);
+            Event oldEvent = GetEventById(id);
+            AddEvent(updateEvent);
+
+            DeleteEvent(id, out oldEvent);
+            return true;
+
         }
 
         // returns all events in a list to be printed out
@@ -58,13 +54,14 @@ namespace hillerodLib
         }
 
         //returns an Event if Id exsist
+        // Throws an exception if the argument is invalid.
         public Event GetEventById(int id)
         {
-            if (_events.ContainsKey(id))
+            if (!_events.ContainsKey(id))
             {
-                return _events[id];
+                throw new BadEvent.FaultyId($"Event with ID {id} doesn't exist");
             }
-            return null!;
+            return _events[id];
         }
 
 
