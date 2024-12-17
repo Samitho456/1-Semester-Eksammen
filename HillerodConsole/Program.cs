@@ -170,7 +170,6 @@ void TestEvent()
     }
 }
 
-
 void PopulateRepos()
 {
     // Adds Boats to the repo
@@ -195,3 +194,4 @@ void PopulateRepos()
     eventRepo.AddEvent(new Event("Sommerfest", new DateTime(2024, 6, 15, 15, 00, 0), new DateTime(2024, 6, 15, 23, 00, 0), "Vi holder en hyggelig sommerfest med grill og musik")); // Event test
     eventRepo.AddEvent(new Event("Træningslejr", new DateTime(2024, 8, 10, 8, 00, 0), new DateTime(2024, 8, 15, 18, 00, 0), "Intensiv træningslejr for alle medlemmer")); // Event test
 }
+
