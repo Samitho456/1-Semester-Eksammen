@@ -1,17 +1,16 @@
 ﻿using hillerodLib;
-using Microsoft.VisualBasic;
-
 
 //intialize repos
 MemberRepo memberRepo = new MemberRepo();
 EventRepo eventRepo = new EventRepo();
 BookingRepo bookingRepo = new BookingRepo();
 BoatRepo boatRepo = new BoatRepo();
-// Creates an Admin object
-Admin admin = new Admin("Henrik", "758@gmail.com", "98723141");
+
 
 // Creates a new instance of the EventRepo class, and adds events to the dictionary 
-PopulateRepos();
+RunTest();
+//PopulateRepos();
+
 
 // Function that runs the user imput to test tests
 void RunTest()
@@ -20,7 +19,10 @@ void RunTest()
     Console.WriteLine("\n1. Member/MemberRepo");
     Console.WriteLine("\n2. Booking/BookingRepo");
     Console.WriteLine("\n3. Events/EventRepo");
+    Console.WriteLine("\n4. MemberEvent");
+    Console.WriteLine("\n5. MemberEvent");
 
+    Console.Write("\nEnter number: ");
     int classTest = Int32.Parse(Console.ReadLine());
 
     switch (classTest)
@@ -40,6 +42,10 @@ void RunTest()
         case 4:
             PopulateRepos();
             TestMemberEvent();
+            break;
+        case 5:
+            PopulateRepos();
+            TestAdmin();
             break;
         default:
             RunTest();
@@ -102,7 +108,7 @@ void TestBooking()
 {
     // Get all bookings and print them out
     Console.WriteLine("Printing all Bookings\n");
-    foreach (Booking b in bookingRepo.GetAllBookings())
+    foreach (var b in bookingRepo.GetAllBookings())
     {
         Console.WriteLine(b);
     }
@@ -120,7 +126,7 @@ void TestBooking()
             Console.WriteLine($"Member: {membersInBooking.Name}");
         }
     }
-    else 
+    else
     {
         Console.WriteLine("Booking not found");
     }
@@ -174,7 +180,7 @@ void TestEvent()
         Console.WriteLine(e.ToString());
     }
 
-    Console.WriteLine("\n" + eventRepo.GetEventById(3).ToString());
+    //Print only one event out by id
     Console.WriteLine("\n" + eventRepo.GetEventById(4).ToString());
 
     // Search Event by Name
@@ -236,299 +242,303 @@ void PopulateRepos()
     eventRepo.AddEvent(new Event("Kamp", new DateTime(2025, 7, 22, 12, 00, 0), new DateTime(2025, 7, 29, 12, 00, 0), "Vi kæmper om Danmarks mesterskaberne")); // Event test
     eventRepo.AddEvent(new Event("Sommerfest", new DateTime(2024, 6, 15, 15, 00, 0), new DateTime(2024, 6, 15, 23, 00, 0), "Vi holder en hyggelig sommerfest med grill og musik")); // Event test
     eventRepo.AddEvent(new Event("Træningslejr", new DateTime(2024, 8, 10, 8, 00, 0), new DateTime(2024, 8, 15, 18, 00, 0), "Intensiv træningslejr for alle medlemmer")); // Event test
-    
+
 }
 
-
-#region Admin
-// Create repositories
-EventRepo adminEventRepo = new EventRepo();
-BoatRepo adminBoatRepo = new BoatRepo();
-MemberRepo adminMemberRepo = new MemberRepo();
-MaintenanceLog adminMaintenanceLog = new MaintenanceLog();
-
-// Create objects for testing
-#region Boat Objects
-Boat adminBoat1 = new Boat(1, "Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018");
-adminBoat1.MaintenanceLog = adminMaintenanceLog;
-Boat updatedBoat = new Boat(1, "Dori", BoatType.SailBoat, "Shantau245", "245", "Volvo 4kMA", 14, "2014");
-Boat deletionBoat = new Boat(3, "Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018");
-#endregion
-#region Report Objects
-DamageReport adminTestReport = new DamageReport(1, "110125", "Test Report");
-DamageReport updatedReport = new DamageReport(1, "20251607", "Updated test report");
-DamageReport deletionReport = new DamageReport(3, "12132025", "Test Description");
-#endregion
-#region Member Objects
-Member adminMember = new Member("Thomas", "123@gmail.com", "12345678");
-Member updatedMember = new Member("Marley", "Marley@gmail.com", "27272727");
-Member deletionMember = new Member("Zikki", "zikke@gmail.com", "12132025");
-#endregion
-#region Event Objects
-Event testEvent = new Event("Test Event", new DateTime(2025, 1, 1), new DateTime(2025, 1, 2), "Test Description");
-Event updatedEvent = new Event("Updated Event", new DateTime(2025, 2, 1), new DateTime(2025, 2, 2), "Updated Description");
-Event deletionEvent = new Event("Event for deletion", new DateTime(2025, 5, 1), new DateTime(2025, 6, 1), "Event for deletion test");
-#endregion
-#region Booking objects
-Booking adminTestBooking = new Booking(new List<Member>() { adminMember }, new DateTime(2025, 1, 1), new DateTime(2025, 2, 1), "Test destanation", adminBoat1);
-#endregion
-Console.WriteLine("Testing Admin Class Methods with Exception Handling\n");
-#region Event Exception Testing 
-// Test Event Methods
-Console.WriteLine("---- Event Methods ----");
-
-// Add Event
-Console.WriteLine("Adding Event...");
-
-try
+void TestAdmin()
 {
+    #region Admin
+    // Create repositories
+    EventRepo adminEventRepo = new EventRepo();
+    BoatRepo adminBoatRepo = new BoatRepo();
+    MemberRepo adminMemberRepo = new MemberRepo();
+    MaintenanceLog adminMaintenanceLog = new MaintenanceLog();
+    // Creates an Admin object
+    Admin admin = new Admin("Henrik", "758@gmail.com", "98723141");
+
+    // Create objects for testing
+    #region Boat Objects
+    Boat adminBoat1 = new Boat(1, "Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018");
+    adminBoat1.MaintenanceLog = adminMaintenanceLog;
+    Boat updatedBoat = new Boat(1, "Dori", BoatType.SailBoat, "Shantau245", "245", "Volvo 4kMA", 14, "2014");
+    Boat deletionBoat = new Boat(3, "Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018");
+    #endregion
+    #region Report Objects
+    DamageReport adminTestReport = new DamageReport(1, "110125", "Test Report");
+    DamageReport updatedReport = new DamageReport(1, "20251607", "Updated test report");
+    DamageReport deletionReport = new DamageReport(3, "12132025", "Test Description");
+    #endregion
+    #region Member Objects
+    Member adminMember = new Member("Thomas", "123@gmail.com", "12345678");
+    Member updatedMember = new Member("Marley", "Marley@gmail.com", "27272727");
+    Member deletionMember = new Member("Zikki", "zikke@gmail.com", "12132025");
+    #endregion
+    #region Event Objects
+    Event testEvent = new Event("Test Event", new DateTime(2025, 1, 1), new DateTime(2025, 1, 2), "Test Description");
+    Event updatedEvent = new Event("Updated Event", new DateTime(2025, 2, 1), new DateTime(2025, 2, 2), "Updated Description");
+    Event deletionEvent = new Event("Event for deletion", new DateTime(2025, 5, 1), new DateTime(2025, 6, 1), "Event for deletion test");
+    #endregion
+    #region Booking objects
+    Booking adminTestBooking = new Booking(new List<Member>() { adminMember }, new DateTime(2025, 1, 1), new DateTime(2025, 2, 1), "Test destanation", adminBoat1);
+    #endregion
+    Console.WriteLine("Testing Admin Class Methods with Exception Handling\n");
+    #region Event Exception Testing 
+    // Test Event Methods
+    Console.WriteLine("---- Event Methods ----");
+
+    // Add Event
     Console.WriteLine("Adding Event...");
-    admin.AddEventInRepo(testEvent, adminEventRepo);
 
-    Console.WriteLine("Trying to add the same Event again (should throw an exception)...");
-    admin.AddEventInRepo(testEvent, adminEventRepo); // Should throw exception
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Caught Exception: {ex.Message}");
-}
+    try
+    {
+        Console.WriteLine("Adding Event...");
+        admin.AddEventInRepo(testEvent, adminEventRepo);
 
-// Update Non-Existing Event
-try
-{
-    Console.WriteLine("Updating a non-existing Event (should throw an exception)...");
+        Console.WriteLine("Trying to add the same Event again (should throw an exception)...");
+        admin.AddEventInRepo(testEvent, adminEventRepo); // Should throw exception
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Caught Exception: {ex.Message}");
+    }
 
-    admin.UpdateEventInRepo(999, updatedEvent, adminEventRepo); // Non-existing ID
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Caught Exception: {ex.Message}");
-}
+    // Update Non-Existing Event
+    try
+    {
+        Console.WriteLine("Updating a non-existing Event (should throw an exception)...");
 
-
-// Delete Non-Existent Event
-try
-{
-    Console.WriteLine("Deleting a non-existent Event (Should throw an Exception)...");
-
-    admin.DeleteEventInRepo(999, deletionEvent, adminEventRepo);
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Caught exception: {ex.Message}");
-}
-#endregion
-#region DamageReport Exception Testing
-// Test DamageReport Methods
-Console.WriteLine("---- DamageReport Methods ----");
+        admin.UpdateEventInRepo(999, updatedEvent, adminEventRepo); // Non-existing ID
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Caught Exception: {ex.Message}");
+    }
 
 
-// Add DamageReport
-try
-{
-    Console.WriteLine("Adding DamageReport...");
-    admin.AddDamageReportInLog(adminBoat1, adminTestReport);
+    // Delete Non-Existent Event
+    try
+    {
+        Console.WriteLine("Deleting a non-existent Event (Should throw an Exception)...");
 
-    Console.WriteLine("Trying to add the same DamageReport again (should throw an exception)...");
-    admin.AddDamageReportInLog(adminBoat1, adminTestReport); // Should throw exception
-}
-catch (BadReport.DuplicateReport ex)
-{
-    Console.WriteLine($"Caught Exception: {ex.Message}");
-}
-
-// Update Non-Existing DamageReport
-try
-{
-    Console.WriteLine("Updating a non-existing DamageReport (should throw an exception)...");
-
-    admin.UpdateDamageReportInLog(999, adminBoat1, updatedReport); // Non-existing ID
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Caught Exception: {ex.Message}");
-}
-
-// Delete Non-Existent DamageReport
-try
-{
-    Console.WriteLine("Deleting a non.existent DamageReport (Should throw an Exception)...");
-
-    admin.DeleteDamageReportInLog(999, adminBoat1, deletionReport);
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Caught exception: {ex.Message}");
-}
-#endregion
-#region Member Exception Testing
-// Test Member Methods
-Console.WriteLine("---- Member Methods ----");
+        admin.DeleteEventInRepo(999, deletionEvent, adminEventRepo);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Caught exception: {ex.Message}");
+    }
+    #endregion
+    #region DamageReport Exception Testing
+    // Test DamageReport Methods
+    Console.WriteLine("---- DamageReport Methods ----");
 
 
-// Add Member
-try
-{
-    Console.WriteLine("Adding Member...");
-    admin.AddMemberInRepo(adminMember, adminMemberRepo);
+    // Add DamageReport
+    try
+    {
+        Console.WriteLine("Adding DamageReport...");
+        admin.AddDamageReportInLog(adminBoat1, adminTestReport);
 
-    Console.WriteLine("Trying to add the same Member again (should throw an exception)...");
-    admin.AddMemberInRepo(adminMember, adminMemberRepo); // Should throw exception
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Caught Exception: {ex.Message}");
-}
+        Console.WriteLine("Trying to add the same DamageReport again (should throw an exception)...");
+        admin.AddDamageReportInLog(adminBoat1, adminTestReport); // Should throw exception
+    }
+    catch (BadReport.DuplicateReport ex)
+    {
+        Console.WriteLine($"Caught Exception: {ex.Message}");
+    }
 
-// Update Non-Existing Member
-try
-{
-    Console.WriteLine("Updating a non-existing Member (should throw an exception)...");
+    // Update Non-Existing DamageReport
+    try
+    {
+        Console.WriteLine("Updating a non-existing DamageReport (should throw an exception)...");
 
-    admin.UpdateMemberInRepo(999, updatedMember, adminMemberRepo); // Non-existing ID
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Caught Exception: {ex.Message}");
-}
+        admin.UpdateDamageReportInLog(999, adminBoat1, updatedReport); // Non-existing ID
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Caught Exception: {ex.Message}");
+    }
 
-// Delete Non-Existent Member
-try
-{
-    Console.WriteLine("Deleting a non.existent Member (Should throw an Exception)...");
+    // Delete Non-Existent DamageReport
+    try
+    {
+        Console.WriteLine("Deleting a non.existent DamageReport (Should throw an Exception)...");
 
-    admin.DeleteMemberInRepo(999, deletionMember, adminMemberRepo);
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Caught exception: {ex.Message}");
-}
-#endregion
-#region Boat Exception Testing
-// Test Boat Methods
-Console.WriteLine("---- Boat Methods ----");
-
-
-// Add Boat
-try
-{
-    Console.WriteLine("Adding Boat...");
-    admin.AddBoatInRepo(adminBoat1, adminBoatRepo);
-
-    Console.WriteLine("Trying to add the same Boat again (should throw an exception)...");
-    admin.AddBoatInRepo(adminBoat1, adminBoatRepo); // Should throw exception
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Caught Exception: {ex.Message}");
-}
-
-// Update Non-Existing Boat
-try
-{
-    Console.WriteLine("Updating a non-existing Boat (should throw an exception)...");
-    admin.UpdateBoatInRepo(999, updatedBoat, adminBoatRepo); // Non-existing ID
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Caught Exception: {ex.Message}");
-}
-
-// Delete Non-Existent Boat
-try
-{
-    Console.WriteLine("Deleting a non.existent Member (Should throw an Exception)...");
-
-    admin.DeleteBoatInRepo(999, deletionBoat, adminBoatRepo);
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Caught exception: {ex.Message}");
-}
-
-#endregion
-#region Testing Actual Methods
-Console.WriteLine("Testing the update methods for each repository");
-//Updating Event
-
-Console.WriteLine("EventRepo updated:");
-try
-{ admin.UpdateEventInRepo(testEvent.Id, updatedEvent, adminEventRepo); }
-catch (Exception ex)
-{
-    Console.WriteLine(ex.Message);
-}
-List<Event> currentEvents = adminEventRepo.GetAllEvents();
-foreach (Event e in currentEvents)
-{
-    Console.WriteLine(e.ToString());
-}
-//Updating Boat
-Console.WriteLine("BoatRepo updated:");
-admin.UpdateBoatInRepo(adminBoat1.Id, updatedBoat, adminBoatRepo);
-List<Boat> currentBoats = adminBoatRepo.GetAllBoats();
-foreach (Boat boat in currentBoats)
-{
-    Console.WriteLine(boat.ToString());
-}
-//Updating Member
-Console.WriteLine("MemberRepo Updated:");
-admin.UpdateMemberInRepo(adminMember.Id, updatedMember, adminMemberRepo);
-List<Member> currentMembers = adminMemberRepo.GetAllMembers();
-foreach (Member m in currentMembers)
-{
-    Console.WriteLine(m.ToString());
-}
-//Updating Report
-Console.WriteLine("Damagereport Updated:");
-admin.UpdateDamageReportInLog(adminTestReport.Id, adminBoat1, updatedReport);
-List<DamageReport> currentReports = adminBoat1.MaintenanceLog.GetAllReports();
-foreach (var report in currentReports)
-{
-    Console.WriteLine(report);
-}
-Console.WriteLine("Testing the Delete methods for each repository");
-//Deleting Event
-Console.WriteLine("Deleting Event");
-admin.DeleteEventInRepo(updatedEvent.Id, updatedEvent, adminEventRepo);
-List<Event> currentEvents2 = adminEventRepo.GetAllEvents();
-if (currentEvents2.Count == 0)
-{
-    Console.WriteLine("EventRepo is empty");
-}
-
-// Deleting Boat
-Console.WriteLine("Deleting boat");
-admin.DeleteBoatInRepo(updatedBoat.Id, updatedBoat, adminBoatRepo);
-List<Boat> currentBoats2 = adminBoatRepo.GetAllBoats();
-if (currentBoats2.Count == 0)
-{
-    Console.WriteLine("BoatRepo is empty");
-}
-
-//Deleting Member
-Console.WriteLine("Deleting Member");
-admin.DeleteMemberInRepo(updatedMember.Id, updatedMember, adminMemberRepo);
-List<Member> currentMembers2 = adminMemberRepo.GetAllMembers();
-if (currentMembers2.Count == 0)
-{
-    Console.WriteLine("MemberRepo is empty");
-}
-//Deleting Report
-Console.WriteLine("Deleting DamageReport");
-admin.DeleteDamageReportInLog(updatedReport.Id, adminBoat1, updatedReport);
-List<DamageReport> currentReports2 = adminBoat1.MaintenanceLog.GetAllReports();
-if (currentReports2.Count == 0)
-{
-    Console.WriteLine("MaintenanceLog is empty");
-}
-
-//Boat available
-Console.WriteLine("Availablity of boat");
-Console.WriteLine(adminBoat1.IsAvailable.ToString());
-admin.BoatIsHome(adminBoat1);
-Console.WriteLine(adminBoat1.IsAvailable.ToString());
+        admin.DeleteDamageReportInLog(999, adminBoat1, deletionReport);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Caught exception: {ex.Message}");
+    }
+    #endregion
+    #region Member Exception Testing
+    // Test Member Methods
+    Console.WriteLine("---- Member Methods ----");
 
 
-#endregion
-#endregion
+    // Add Member
+    try
+    {
+        Console.WriteLine("Adding Member...");
+        admin.AddMemberInRepo(adminMember, adminMemberRepo);
+
+        Console.WriteLine("Trying to add the same Member again (should throw an exception)...");
+        admin.AddMemberInRepo(adminMember, adminMemberRepo); // Should throw exception
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Caught Exception: {ex.Message}");
+    }
+
+    // Update Non-Existing Member
+    try
+    {
+        Console.WriteLine("Updating a non-existing Member (should throw an exception)...");
+
+        admin.UpdateMemberInRepo(999, updatedMember, adminMemberRepo); // Non-existing ID
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Caught Exception: {ex.Message}");
+    }
+
+    // Delete Non-Existent Member
+    try
+    {
+        Console.WriteLine("Deleting a non.existent Member (Should throw an Exception)...");
+
+        admin.DeleteMemberInRepo(999, deletionMember, adminMemberRepo);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Caught exception: {ex.Message}");
+    }
+    #endregion
+    #region Boat Exception Testing
+    // Test Boat Methods
+    Console.WriteLine("---- Boat Methods ----");
+
+
+    // Add Boat
+    try
+    {
+        Console.WriteLine("Adding Boat...");
+        admin.AddBoatInRepo(adminBoat1, adminBoatRepo);
+
+        Console.WriteLine("Trying to add the same Boat again (should throw an exception)...");
+        admin.AddBoatInRepo(adminBoat1, adminBoatRepo); // Should throw exception
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Caught Exception: {ex.Message}");
+    }
+
+    // Update Non-Existing Boat
+    try
+    {
+        Console.WriteLine("Updating a non-existing Boat (should throw an exception)...");
+        admin.UpdateBoatInRepo(999, updatedBoat, adminBoatRepo); // Non-existing ID
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Caught Exception: {ex.Message}");
+    }
+
+    // Delete Non-Existent Boat
+    try
+    {
+        Console.WriteLine("Deleting a non.existent Member (Should throw an Exception)...");
+
+        admin.DeleteBoatInRepo(999, deletionBoat, adminBoatRepo);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Caught exception: {ex.Message}");
+    }
+
+    #endregion
+    #region Testing Actual Methods
+    Console.WriteLine("Testing the update methods for each repository");
+    //Updating Event
+
+    Console.WriteLine("EventRepo updated:");
+    try
+    { admin.UpdateEventInRepo(testEvent.Id, updatedEvent, adminEventRepo); }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    List<Event> currentEvents = adminEventRepo.GetAllEvents();
+    foreach (Event e in currentEvents)
+    {
+        Console.WriteLine(e.ToString());
+    }
+    //Updating Boat
+    Console.WriteLine("BoatRepo updated:");
+    admin.UpdateBoatInRepo(adminBoat1.Id, updatedBoat, adminBoatRepo);
+    List<Boat> currentBoats = adminBoatRepo.GetAllBoats();
+    foreach (Boat boat in currentBoats)
+    {
+        Console.WriteLine(boat.ToString());
+    }
+    //Updating Member
+    Console.WriteLine("MemberRepo Updated:");
+    admin.UpdateMemberInRepo(adminMember.Id, updatedMember, adminMemberRepo);
+    List<Member> currentMembers = adminMemberRepo.GetAllMembers();
+    foreach (Member m in currentMembers)
+    {
+        Console.WriteLine(m.ToString());
+    }
+    //Updating Report
+    Console.WriteLine("Damagereport Updated:");
+    admin.UpdateDamageReportInLog(adminTestReport.Id, adminBoat1, updatedReport);
+    List<DamageReport> currentReports = adminBoat1.MaintenanceLog.GetAllReports();
+    foreach (var report in currentReports)
+    {
+        Console.WriteLine(report);
+    }
+    Console.WriteLine("Testing the Delete methods for each repository");
+    //Deleting Event
+    Console.WriteLine("Deleting Event");
+    admin.DeleteEventInRepo(updatedEvent.Id, updatedEvent, adminEventRepo);
+    List<Event> currentEvents2 = adminEventRepo.GetAllEvents();
+    if (currentEvents2.Count == 0)
+    {
+        Console.WriteLine("EventRepo is empty");
+    }
+
+    // Deleting Boat
+    Console.WriteLine("Deleting boat");
+    admin.DeleteBoatInRepo(updatedBoat.Id, updatedBoat, adminBoatRepo);
+    List<Boat> currentBoats2 = adminBoatRepo.GetAllBoats();
+    if (currentBoats2.Count == 0)
+    {
+        Console.WriteLine("BoatRepo is empty");
+    }
+
+    //Deleting Member
+    Console.WriteLine("Deleting Member");
+    admin.DeleteMemberInRepo(updatedMember.Id, updatedMember, adminMemberRepo);
+    List<Member> currentMembers2 = adminMemberRepo.GetAllMembers();
+    if (currentMembers2.Count == 0)
+    {
+        Console.WriteLine("MemberRepo is empty");
+    }
+    //Deleting Report
+    Console.WriteLine("Deleting DamageReport");
+    admin.DeleteDamageReportInLog(updatedReport.Id, adminBoat1, updatedReport);
+    List<DamageReport> currentReports2 = adminBoat1.MaintenanceLog.GetAllReports();
+    if (currentReports2.Count == 0)
+    {
+        Console.WriteLine("MaintenanceLog is empty");
+    }
+
+    //Boat available
+    Console.WriteLine("Availablity of boat");
+    Console.WriteLine(adminBoat1.IsAvailable.ToString());
+    admin.BoatIsHome(adminBoat1);
+    Console.WriteLine(adminBoat1.IsAvailable.ToString());
+
+
+    #endregion
+    #endregion
+}
