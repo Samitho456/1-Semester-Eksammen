@@ -2,26 +2,10 @@
 using Microsoft.VisualBasic;
 
 //intialize repos
-BoatRepo repo = new BoatRepo();
+BoatRepo boatRepo = new BoatRepo();
 MemberRepo memberRepo = new MemberRepo();
 EventRepo eventRepo = new EventRepo();
 BookingRepo bookingRepo = new BookingRepo();
-
-// Adds Boats to the repo
-repo.AddBoat(new(1, "Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018")); // Boat test
-repo.AddBoat(new(2, "Dori", BoatType.SailBoat, "Shantau245", "245", "Volvo 4kMA", 14, "2014")); // Boat test
-repo.AddBoat(new(3, "Maren", BoatType.SailBoat, "Nimbus 405 Coupe", "N405", "2 x Volvo Penta 380HK", 16, "2020")); // Boat test
-
-// Adds Members to the repo
-memberRepo.CreateMember(new Member("Thomas", "123@gmail.com", "12345678"));
-memberRepo.CreateMember(new Member("Jens", "456@gmail.com", "87654321"));
-memberRepo.CreateMember(new Member("thomas", "798@gmail.com", "94629562"));
-memberRepo.CreateMember(new Member("dsfg", "asdfasdf8@gmail.com", "834257234"));
-
-// Add booking to the repo
-bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(1), memberRepo.FindMemberById(2)}, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Ven"));
-bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(3), memberRepo.FindMemberById(4)}, new DateTime(2025, 7, 1, 11, 30, 0), new DateTime(2025, 7, 5, 12, 00, 0), "Odense"));
-
 
 // Function that runs the user imput to test tests
 void RunTest()
@@ -36,12 +20,15 @@ void RunTest()
     switch (classTest)
     {
         case 1:
+            PopulateRepos();
             TestMember();
             break;
         case 2:
+            PopulateRepos();
             TestBooking();
             break;
         case 3:
+            PopulateRepos();
             TestEvent();
             break;
         default:
@@ -49,7 +36,6 @@ void RunTest()
             break;
     }
 }
-
 
 // Function to test Members
 void TestMember()
@@ -82,7 +68,7 @@ void TestMember()
 
     //updates member and print member list
 
-    Member updatedmember = new("new member", "newmember.dk@gmail.com", "12312332")
+    Member updatedmember = new("new member", "newmember.dk@gmail.com", "12312332");
     Console.WriteLine("\nUpdate member");
     memberRepo.UpdateMember(2, updatedmember);
 
@@ -113,14 +99,7 @@ void TestBooking()
 // Function to test Events
 void TestEvent()
 {
-    //add events to repo
-    eventRepo.AddEvent(new Event("Båd oprydning", new DateTime(2025, 12, 1, 11, 30, 0), new DateTime(2025, 12, 1, 17, 30, 0), "Vi skal ryder op på havnen", 2)); // Event test
-    eventRepo.AddEvent(new Event("SejlTur til Odense", new DateTime(2024, 12, 1, 12, 00, 0), new DateTime(2024, 12, 7, 12, 30, 0), "Vi tager en tur til Odense")); // Event test
-    eventRepo.AddEvent(new Event("Kamp", new DateTime(2025, 7, 22, 12, 00, 0), new DateTime(2025, 7, 29, 12, 00, 0), "Vi kæmper om Danmarks mesterskaberne")); // Event test
-    eventRepo.AddEvent(new Event("Sommerfest", new DateTime(2024, 6, 15, 15, 00, 0), new DateTime(2024, 6, 15, 23, 00, 0), "Vi holder en hyggelig sommerfest med grill og musik")); // Event test
-    eventRepo.AddEvent(new Event("Træningslejr", new DateTime(2024, 8, 10, 8, 00, 0), new DateTime(2024, 8, 15, 18, 00, 0), "Intensiv træningslejr for alle medlemmer")); // Event test
     Event newEvent = new Event("Sejladskursus", new DateTime(2024, 3, 5, 9, 00, 0), new DateTime(2024, 3, 10, 16, 00, 0), "Et kursus for begyndere i sejlads"); // Event test
-
 
     //print all events
     Console.WriteLine("print all events");
@@ -154,9 +133,34 @@ void TestEvent()
     Console.WriteLine("\n" + eventRepo.GetEventById(3).ToString());
     Console.WriteLine("\n" + eventRepo.GetEventById(4).ToString());
 
-
     foreach (Event e in eventRepo.SearchEventByName("Træningslejr"))
     {
         Console.WriteLine(e.ToString());
     }
+}
+
+
+void PopulateRepos()
+{
+    // Adds Boats to the repo
+    boatRepo.AddBoat(new(1, "Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018")); // Boat test
+    boatRepo.AddBoat(new(2, "Dori", BoatType.SailBoat, "Shantau245", "245", "Volvo 4kMA", 14, "2014")); // Boat test
+    boatRepo.AddBoat(new(3, "Maren", BoatType.SailBoat, "Nimbus 405 Coupe", "N405", "2 x Volvo Penta 380HK", 16, "2020")); // Boat test
+
+    // Adds Members to the repo
+    memberRepo.CreateMember(new Member("Thomas", "123@gmail.com", "12345678"));
+    memberRepo.CreateMember(new Member("Jens", "456@gmail.com", "87654321"));
+    memberRepo.CreateMember(new Member("thomas", "798@gmail.com", "94629562"));
+    memberRepo.CreateMember(new Member("dsfg", "asdfasdf8@gmail.com", "834257234"));
+
+    // Add booking to the repo
+    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(1), memberRepo.FindMemberById(2) }, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Ven"));
+    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(3), memberRepo.FindMemberById(4) }, new DateTime(2025, 7, 1, 11, 30, 0), new DateTime(2025, 7, 5, 12, 00, 0), "Odense"));
+
+    //add events to repo
+    eventRepo.AddEvent(new Event("Båd oprydning", new DateTime(2025, 12, 1, 11, 30, 0), new DateTime(2025, 12, 1, 17, 30, 0), "Vi skal ryder op på havnen", 2)); // Event test
+    eventRepo.AddEvent(new Event("SejlTur til Odense", new DateTime(2024, 12, 1, 12, 00, 0), new DateTime(2024, 12, 7, 12, 30, 0), "Vi tager en tur til Odense")); // Event test
+    eventRepo.AddEvent(new Event("Kamp", new DateTime(2025, 7, 22, 12, 00, 0), new DateTime(2025, 7, 29, 12, 00, 0), "Vi kæmper om Danmarks mesterskaberne")); // Event test
+    eventRepo.AddEvent(new Event("Sommerfest", new DateTime(2024, 6, 15, 15, 00, 0), new DateTime(2024, 6, 15, 23, 00, 0), "Vi holder en hyggelig sommerfest med grill og musik")); // Event test
+    eventRepo.AddEvent(new Event("Træningslejr", new DateTime(2024, 8, 10, 8, 00, 0), new DateTime(2024, 8, 15, 18, 00, 0), "Intensiv træningslejr for alle medlemmer")); // Event test
 }
