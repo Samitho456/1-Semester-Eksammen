@@ -85,7 +85,7 @@ namespace hillerodLib
         }
 
         // Search through _events's Values and if it exsist in the dictionary adds them to a list witch is then returned.
-        public List<Event> SearchEventsByDateTime(DateOnly date)
+        public List<Event> SearchEventsByDate(DateOnly date)
         {
             
             List<Event> result = new List<Event>();
@@ -113,7 +113,7 @@ namespace hillerodLib
 
 
 
-                if ((dateOnlyStart.CompareTo(date) <= 0 && dateOnlyEnd.CompareTo(date) >= 0))
+                if (dateOnlyStart.CompareTo(date) <= 0 && dateOnlyEnd.CompareTo(date) >= 0)
                 {
                     result.Add(e);
                 }

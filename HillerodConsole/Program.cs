@@ -10,24 +10,7 @@ BookingRepo bookingRepo = new BookingRepo();
 // Creates a new instance of the EventRepo class, and adds events to the dictionary 
 PopulateRepos();
 
-#region Test EventRepo
-
-foreach (var item in eventRepo.SearchEventsByDateTime(new DateOnly(2025, 12, 1)))
-{
-    Console.WriteLine(item);
-}
-#endregion
-
-#region Members that joins an event
-Console.WriteLine();
-eventRepo.GetEventById(1).Members.AddMember(memberRepo.FindMemberById(1));
-eventRepo.GetEventById(1).Members.AddMember(memberRepo.FindMemberById(2));
-foreach (var mj in eventRepo.GetEventById(1).Members.Members)
-{
-    Console.WriteLine(mj);
-}
-Console.WriteLine();
-#endregion
+TestEvent();
 
 
 // Function that runs the user imput to test tests
@@ -54,11 +37,18 @@ void RunTest()
             PopulateRepos();
             TestEvent();
             break;
+        case 4:
+            PopulateRepos();
+            TestMemberEvent();
+            break;
         default:
             RunTest();
             break;
     }
 }
+
+
+
 
 // Function to test Members
 void TestMember()
@@ -113,10 +103,44 @@ void TestMember()
 // Function to test Booking
 void TestBooking()
 {
-    foreach (var item in bookingRepo.GetAllBookings())
+    // Get all bookings and print them out
+    Console.WriteLine("Printing all Bookings\n");
+    foreach (Booking b in bookingRepo.GetAllBookings())
     {
-        Console.WriteLine(item);
+        Console.WriteLine(b);
     }
+
+    // Get booking by id
+    Console.WriteLine($"\nFinding a booking by {bookingRepo.GetBookingById(1)}");
+    Console.WriteLine();
+
+    // Delete booking by id
+    if (bookingRepo.DeleteBooking(1, out Booking deletedBooking))
+    {
+        Console.WriteLine($"Booking deleted: Id = {deletedBooking.Id}");
+        foreach (var membersInBooking in deletedBooking.Members)
+        {
+            Console.WriteLine($"Member: {membersInBooking.Name}");
+        }
+    }
+    else 
+    {
+        Console.WriteLine("Booking not found");
+    }
+    Console.WriteLine();
+    Console.WriteLine("Printing all Bookings\n");
+    foreach (Booking b in bookingRepo.GetAllBookings())
+    {
+        Console.WriteLine(b);
+    }
+
+    //update Booking
+    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(1), memberRepo.FindMemberById(2) }, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Ven"));
+    Console.WriteLine($"\nFinding a booking by {bookingRepo.GetBookingById(3)} \n");
+    bookingRepo.UpdateBooking(3, new Booking(new List<Member>() { memberRepo.FindMemberById(2), memberRepo.FindMemberById(3) }, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Berlin"));
+    Console.WriteLine($"\nFinding a booking by {bookingRepo.GetBookingById(3)}");
+
+
 }
 
 // Function to test Events
@@ -156,10 +180,40 @@ void TestEvent()
     Console.WriteLine("\n" + eventRepo.GetEventById(3).ToString());
     Console.WriteLine("\n" + eventRepo.GetEventById(4).ToString());
 
+    // Search Event by Name
+    Console.WriteLine("\nSearch event by name");
     foreach (Event e in eventRepo.SearchEventByName("Træningslejr"))
     {
         Console.WriteLine(e.ToString());
     }
+
+    // Search Event by Date
+    Console.WriteLine("\nSearch event by date");
+    foreach (var e in eventRepo.SearchEventsByDate(new DateOnly(2024, 8, 10)))
+    {
+        Console.WriteLine(e);
+    }
+
+    // Search Event by description
+    Console.WriteLine("\nSearch event by description");
+    foreach (var e in eventRepo.SearchEventByDescription("træningslejr"))
+    {
+        Console.WriteLine(e.ToString());
+    }
+}
+
+void TestMemberEvent()
+{
+
+    // get all members that have joined an Event
+    Console.WriteLine();
+    eventRepo.GetEventById(1).Members.AddMember(memberRepo.FindMemberById(1));
+    eventRepo.GetEventById(1).Members.AddMember(memberRepo.FindMemberById(2));
+    foreach (var mE in eventRepo.GetEventById(1).Members.Members)
+    {
+        Console.WriteLine(mE);
+    }
+    Console.WriteLine();
 }
 
 void PopulateRepos()
