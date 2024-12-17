@@ -11,19 +11,19 @@ namespace hillerodLib
     {
         private Dictionary<int, Blog> _blogList = new Dictionary<int, Blog>();
 
-        // Så man kan tilføje en blog
+        // Add a blog with id
         public void AddBlog(Blog blog)
         {
             _blogList.TryAdd(blog.Id, blog);
         }
 
-        // Så man kan slette en blog
+        // Delete a blog by id and out delete blog
         public bool DeleteBlog(int blogId, out Blog deleteBlog)
         {
             return _blogList.Remove(blogId, out deleteBlog);
         }
 
-        // Så man kan opdatere en blog
+        // Update a blog by id, if it contains a valid id
         public void UpdateBlog(int id, Blog blog)
         {
             if (_blogList.ContainsKey(id))
@@ -36,7 +36,8 @@ namespace hillerodLib
             }
         }
 
-        // Så man kan finde en blog på Id nummer
+        // Finding a blog by id, if it contains a valid id
+        // If blog id is invalid, return null
 
         public Blog GetBlogById(int id)
         {
@@ -46,7 +47,7 @@ namespace hillerodLib
             }
             return null;
         }
-            // Så man kan finde blogs ud fra type
+            // Finding a blog by type, and return a list of blogs by that type
 
 
            public List<Blog> GetBlogByEnum(BlogType blogEnum, Blog blog)
