@@ -22,7 +22,7 @@ namespace hillerodLib
         }
         public override string ToString()
         {
-            return($"Id: + { Id}" + "\n" + $"Name: { Name}" + "\n" + $"Description: + {Description}" + "\n" + $"Type: + {Type}");
+            return($"Id: { Id}" + "\n" + $"Name: { Name}" + "\n" + $"Description: {Description}" + "\n" + $"Type: {Type}");
         }
     }
 }
