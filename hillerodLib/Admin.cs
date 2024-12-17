@@ -74,6 +74,7 @@ namespace hillerodLib
         public DamageReport AddDamageReportInLog(Boat boat, DamageReport report)
         {
             boat.MaintenanceLog.AddReport(report);
+            boat.IsAvailable = false;
             return report;
         }
 
