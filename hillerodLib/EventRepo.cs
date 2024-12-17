@@ -81,15 +81,15 @@ namespace hillerodLib
             return result;
         }
 
-        // Search through _events's Values and if it exsist in the dictionary adds them to a list witch is then returned.
+        // Search through _events's DateTime values and if anything exsist in the dictionary adds them to a list witch is then returned.
         public List<Event> SearchEventsByDate(DateOnly date)
         {
-            
-            List<Event> result = new List<Event>();
+            //creating a list to put our results in
+            List<Event> results = new List<Event>();
 
             foreach (Event e in _events.Values)
             {
-                // Convert the start and end dates of the event to DateOnly for comparison.
+                // Convert the start and end dates of event to DateOnly for comparison.
                 // DateOnly represents the date without time information.
                 DateOnly dateOnlyStart = DateOnly.FromDateTime(e.DateStart);
                 DateOnly dateOnlyEnd = DateOnly.FromDateTime(e.DateEnd);
@@ -114,27 +114,27 @@ namespace hillerodLib
 
                 if (dateOnlyStart.CompareTo(date) <= 0 && dateOnlyEnd.CompareTo(date) >= 0)
                 {
-                    result.Add(e);
+                    results.Add(e);
                 }
             }
 
-            return result;
+            return results;
         }
 
         // Search through _events's Values and if it exsist in the dictionary adds them to a list witch is then returned.
         public List<Event> SearchEventByDescription(string description)
         {
-            List<Event> result = new List<Event>();
+            List<Event> results = new List<Event>();
 
             foreach (var e in _events.Values)
             {
 
                 if (e.Description.ToLower().Contains(description.ToLower()))
                 {
-                    result.Add(e);
+                    results.Add(e);
                 }
             }
-            return result;
+            return results;
         }
 
     }
