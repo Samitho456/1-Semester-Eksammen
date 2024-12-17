@@ -3,7 +3,7 @@
     public class BoatRepo
     {
         private Dictionary<int, Boat> _boatList = new Dictionary<int, Boat>();
-      
+
         // Throws an exception if the Boat object already exists. 
         // Add a boat to dictonary
         public void AddBoat(Boat boat)
@@ -17,7 +17,7 @@
         // Delete a boat by id and out the deleted boat
         public bool DeleteBoat(int boatId, out Boat deleteBoat)
         {
-            
+
             GetBoatById(boatId);
             return _boatList.Remove(boatId, out deleteBoat);
         }
@@ -29,7 +29,7 @@
         {
             GetBoatById(id);
             Boat oldBoat = GetBoatById(id);
-            DeleteBoat(id,out oldBoat);
+            DeleteBoat(id, out oldBoat);
             _boatList.Add(boat.Id, boat);
         }
         // Find a boat by id and return the boat with that id
@@ -45,21 +45,23 @@
             return _boatList[id];
         }
 
-         // Så man kan finde både ud fra type
+        // Så man kan finde både ud fra type
 
-            public List<Boat> GetBoatByEnum(BoatType boatEnum)
+        public List<Boat> GetBoatByEnum(BoatType boatEnum)
+        {
+            List<Boat> list = new List<Boat>();
+
+            foreach (KeyValuePair<int, Boat> kvp in _boatList)
             {
-                List<Boat> list = new List<Boat>();
-
-                foreach (KeyValuePair<int, Boat> kvp in _boatList)
+                Boat boat = kvp.Value;
+                if (boat.Type == boatEnum)
                 {
-                    Boat boat = kvp.Value;
-                    if (boat.Type == boatEnum)
-                        list.Add(boat);
+                    list.Add(boat);
                 }
-                return list;
             }
-      
+            return list;
+        }
+
         // Method to get all Boat objects in List form.
         public List<Boat> GetAllBoats()
         {

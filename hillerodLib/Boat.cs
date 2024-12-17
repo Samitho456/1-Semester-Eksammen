@@ -32,11 +32,12 @@ namespace hillerodLib
             MaintenanceLog = new MaintenanceLog();
             IsAvailable = true;
         }
-        //Uses the DamnageReport Class Methods to perform Crud operations on its maintenance log
 
+        //Uses the DamnageReport Class Methods to perform Crud operations on its maintenance log
         public DamageReport AddDamageReport(DamageReport report)
         {
             MaintenanceLog.AddReport(report);
+            IsAvailable = false;
             return report;
 
         }
