@@ -1,32 +1,13 @@
 ﻿using hillerodLib;
 using Microsoft.VisualBasic;
 
-// Creates a new instance of the BoatRepo class, and adds Boats to the dictionary 
-BoatRepo repo = new BoatRepo();
-repo.AddBoat(new(1, "Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018")); // Boat test
-repo.AddBoat(new(2, "Dori", BoatType.SailBoat, "Shantau245", "245", "Volvo 4kMA", 14, "2014")); // Boat test
-repo.AddBoat(new(3, "Maren", BoatType.SailBoat, "Nimbus 405 Coupe", "N405", "2 x Volvo Penta 380HK", 16, "2020")); // Boat test
 
-// Creates an Admin object
-Admin admin = new Admin("Henrik", "758@gmail.com", "98723141");
 
-// Creates a new instance of the MemberRepo class, and adds Members to the dictionary 
+
+//intialize repos
 MemberRepo memberRepo = new MemberRepo();
-Member member = new Member("Thomas", "123@gmail.com", "12345678"); //create member test
-Member member1 = new Member("Jens", "456@gmail.com", "87654321"); //create member test
-Member member2 = new Member("thomas", "798@gmail.com", "94629562"); //create member test
-Member member3 = new Member("dsfg", "asdfasdf8@gmail.com", "834257234"); //create member test
-
-// Creates a new instance of the EventRepo class, and adds events to the dictionary 
 EventRepo eventRepo = new EventRepo();
-eventRepo.AddEvent(new Event("Båd oprydning", new DateTime(2025, 12, 1, 11, 30, 0), new DateTime(2025, 12, 1, 17, 30, 0), "Vi skal ryder op på havnen")); // Event test
-eventRepo.AddEvent(new Event("SejlTur til Odense", new DateTime(2024, 12, 1, 12, 00, 0), new DateTime(2024, 12, 7, 12, 30, 0), "Vi tager en tur til Odense")); // Event test
-eventRepo.AddEvent(new Event("Kamp", new DateTime(2025, 7, 22, 12, 00, 0), new DateTime(2025, 7, 29, 12, 00, 0), "Vi kæmper om Danmarks mesterskaberne")); // Event test
-
-
 BookingRepo bookingRepo = new BookingRepo();
-bookingRepo.AddBooking(new Booking(new List<Member>() { member, member1 }, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Ven"));
-bookingRepo.AddBooking(new Booking(new List<Member>() { member2, member3 }, new DateTime(2025, 7, 1, 11, 30, 0), new DateTime(2025, 7, 5, 12, 00, 0), "Odense"));
 
 
 #region Test EventRepo
@@ -48,50 +29,164 @@ foreach (var mj in eventRepo.GetEventById(1).MemberJoined)
 Console.WriteLine();
 #endregion
 
-#region testing booking
-foreach (var item in bookingRepo.GetAllBookings())
+
+// Function that runs the user imput to test tests
+void RunTest()
 {
-    Console.WriteLine(item);
+    Console.WriteLine("What do you want to test?");
+    Console.WriteLine("\n1. Member/MemberRepo");
+    Console.WriteLine("\n2. Booking/BookingRepo");
+    Console.WriteLine("\n3. Events/EventRepo");
+
+    int classTest = Int32.Parse(Console.ReadLine());
+
+    switch (classTest)
+    {
+        case 1:
+            PopulateRepos();
+            TestMember();
+            break;
+        case 2:
+            PopulateRepos();
+            TestBooking();
+            break;
+        case 3:
+            PopulateRepos();
+            TestEvent();
+            break;
+        default:
+            RunTest();
+            break;
+    }
 }
-#endregion
 
-#region Testing Member
-foreach (Member m in memberRepo.GetAllMembers())
+// Function to test Members
+void TestMember()
 {
-    Console.WriteLine(m.ToString());
+
+    //print all members
+    Console.WriteLine("Printing all Members\n");
+    foreach (Member m in memberRepo.GetAllMembers())
+    {
+        Console.WriteLine(m.ToString());
+    }
+
+    //search member by id
+    Console.WriteLine("member by id: " + memberRepo.FindMemberById(2).ToString());
+
+    //filter members by name
+    Console.WriteLine("\n\nFilter by name thomas");
+    foreach (Member m in memberRepo.FilterMembersByName("thOmas"))
+    {
+        Console.WriteLine(m.ToString());
+    }
+    Console.WriteLine();
+
+
+    //print all members
+    foreach (Member m in memberRepo.GetAllMembers())
+    {
+        Console.WriteLine(m.ToString());
+    }
+
+    //updates member and print member list
+
+    Member updatedmember = new("new member", "newmember.dk@gmail.com", "12312332");
+    Console.WriteLine("\nUpdate member");
+    memberRepo.UpdateMember(2, updatedmember);
+
+    Console.WriteLine("List with updated member");
+    foreach (Member m in memberRepo.GetAllMembers())
+    {
+        Console.WriteLine(m.ToString());
+    }
+
+    //Delete member and print member list
+    Console.WriteLine("\nDeleted member");
+    memberRepo.DeleteMemberById(3);
+    foreach (Member m in memberRepo.GetAllMembers())
+    {
+        Console.WriteLine(m.ToString());
+    }
 }
 
-memberRepo.CreateMember(member);
-memberRepo.CreateMember(member2);
-memberRepo.CreateMember(member1);
-
-Console.WriteLine("member by id: " + memberRepo.FindMemberById(2).ToString());
-Console.WriteLine("\nFilter by name thomas");
-foreach (Member m in memberRepo.FilterMembersByName("thOmas"))
+// Function to test Booking
+void TestBooking()
 {
-    Console.WriteLine(m.ToString());
+    foreach (var item in bookingRepo.GetAllBookings())
+    {
+        Console.WriteLine(item);
+    }
 }
-Console.WriteLine();
 
-foreach (Member m in memberRepo.GetAllMembers())
+// Function to test Events
+void TestEvent()
 {
-    Console.WriteLine(m.ToString());
+    Event newEvent = new Event("Sejladskursus", new DateTime(2024, 3, 5, 9, 00, 0), new DateTime(2024, 3, 10, 16, 00, 0), "Et kursus for begyndere i sejlads"); // Event test
+
+    //print all events
+    Console.WriteLine("print all events");
+    foreach (Event e in eventRepo.GetAllEvents())
+    {
+        Console.WriteLine(e.ToString());
+    }
+
+    //Delete events
+    string delete = eventRepo.DeleteEvent(1, out Event deletedEvent) ? delete = deletedEvent.ToString() : delete = "Event not found";
+    Console.WriteLine("\n" + delete);
+
+    //print all events
+    Console.WriteLine("print all events");
+    foreach (Event e in eventRepo.GetAllEvents())
+    {
+        Console.WriteLine(e.ToString());
+    }
+
+    //update Event
+    string update = eventRepo.UpdateEvent(3, newEvent) ? update = "Event Updated" : update = "Failed to update event";
+    Console.WriteLine("\n" + update);
+
+    //print all events
+    Console.WriteLine("print all events");
+    foreach (Event e in eventRepo.GetAllEvents())
+    {
+        Console.WriteLine(e.ToString());
+    }
+
+    Console.WriteLine("\n" + eventRepo.GetEventById(3).ToString());
+    Console.WriteLine("\n" + eventRepo.GetEventById(4).ToString());
+
+    foreach (Event e in eventRepo.SearchEventByName("Træningslejr"))
+    {
+        Console.WriteLine(e.ToString());
+    }
 }
-Console.WriteLine();
 
-Console.WriteLine("\nUpdate member");
-memberRepo.UpdateMember(2, member3);
-foreach (Member m in memberRepo.GetAllMembers())
+void PopulateRepos()
 {
-    Console.WriteLine(m.ToString());
-}
-Console.WriteLine();
+    // Adds Boats to the repo
+    boatRepo.AddBoat(new(1, "Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018")); // Boat test
+    boatRepo.AddBoat(new(2, "Dori", BoatType.SailBoat, "Shantau245", "245", "Volvo 4kMA", 14, "2014")); // Boat test
+    boatRepo.AddBoat(new(3, "Maren", BoatType.SailBoat, "Nimbus 405 Coupe", "N405", "2 x Volvo Penta 380HK", 16, "2020")); // Boat test
 
-Console.WriteLine("\nDeleted member");
-memberRepo.DeleteMember(3, out member3);
-foreach (Member m in memberRepo.GetAllMembers())
-{
-    Console.WriteLine(m.ToString());
+    // Adds Members to the repo
+    memberRepo.CreateMember(new Member("Thomas", "123@gmail.com", "12345678"));
+    memberRepo.CreateMember(new Member("Jens", "456@gmail.com", "87654321"));
+    memberRepo.CreateMember(new Member("thomas", "798@gmail.com", "94629562"));
+    memberRepo.CreateMember(new Member("dsfg", "asdfasdf8@gmail.com", "834257234"));
+
+    // Add booking to the repo
+    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(1), memberRepo.FindMemberById(2) }, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Ven"));
+    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(3), memberRepo.FindMemberById(4) }, new DateTime(2025, 7, 1, 11, 30, 0), new DateTime(2025, 7, 5, 12, 00, 0), "Odense"));
+
+    //add events to repo
+    eventRepo.AddEvent(new Event("Båd oprydning", new DateTime(2025, 12, 1, 11, 30, 0), new DateTime(2025, 12, 1, 17, 30, 0), "Vi skal ryder op på havnen")); // Event test
+    eventRepo.AddEvent(new Event("SejlTur til Odense", new DateTime(2024, 12, 1, 12, 00, 0), new DateTime(2024, 12, 7, 12, 30, 0), "Vi tager en tur til Odense")); // Event test
+    eventRepo.AddEvent(new Event("Kamp", new DateTime(2025, 7, 22, 12, 00, 0), new DateTime(2025, 7, 29, 12, 00, 0), "Vi kæmper om Danmarks mesterskaberne")); // Event test
+    eventRepo.AddEvent(new Event("Sommerfest", new DateTime(2024, 6, 15, 15, 00, 0), new DateTime(2024, 6, 15, 23, 00, 0), "Vi holder en hyggelig sommerfest med grill og musik")); // Event test
+    eventRepo.AddEvent(new Event("Træningslejr", new DateTime(2024, 8, 10, 8, 00, 0), new DateTime(2024, 8, 15, 18, 00, 0), "Intensiv træningslejr for alle medlemmer")); // Event test
+    // Creates an Admin object
+    Admin admin = new Admin("Henrik", "758@gmail.com", "98723141");
 }
 #endregion
 
