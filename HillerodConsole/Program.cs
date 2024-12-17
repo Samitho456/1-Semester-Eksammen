@@ -52,9 +52,6 @@ void RunTest()
     }
 }
 
-
-
-
 // Function to test Members
 void TestMember()
 {
