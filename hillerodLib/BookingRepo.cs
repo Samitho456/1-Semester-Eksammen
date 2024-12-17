@@ -18,7 +18,7 @@ namespace hillerodLib
         // Deletes a Booking
         public bool DeleteBooking(int id, out Booking deletedBooking)
         {
-            return _bookings.Remove(id, out deletedBooking);
+                return _bookings.Remove(id, out deletedBooking);         
         }
 
         //Updates a Booking with a new booking and same id

@@ -89,14 +89,16 @@ namespace hillerodLib
 
             foreach (Event e in _events.Values)
             {
-
-                // comment ///
+                // Convert the start and end dates of the event to DateOnly for comparison.
+                // DateOnly represents the date without time information.
                 DateOnly dateOnlyStart = DateOnly.FromDateTime(e.DateStart);
                 DateOnly dateOnlyEnd = DateOnly.FromDateTime(e.DateEnd);
 
 
-                // Compare the time of our parameter with our start date and end date.
-                // CompareTo:
+                // Compares the date of our parameter with our start date and end date.
+
+                // Compares:
+
                 // if Less than zero (-1):
                 //          This instance is earlier than value.
                 // if Zero (0):
