@@ -8,20 +8,27 @@ namespace hillerodLib
 {
     public class Booking
     {
+
+        // propertys 
         public List<Member> Members {  get; set; }
         private static int nextId = 1;
         public int Id {  get; set; }
         public DateTime Depature { get; set; }
         public DateTime Arrival { get; set; }
         public string Destanation { get; set; }
+        public Boat Boat { get; set; }
 
-        public Booking(List<Member> members, DateTime depature, DateTime arrival, string destanation)
+        // Constructor 
+        public Booking(List<Member> members, DateTime depature, DateTime arrival, string destanation, Boat boat)
         {
             Id = nextId++;
             Members = members;
             Depature = depature;
             Arrival = arrival;
             Destanation = destanation;
+            Boat = boat;
+            boat.IsAvailable = false;
+
         }
 
         public override string ToString()
@@ -29,9 +36,13 @@ namespace hillerodLib
             string listMember = "";
             foreach (Member m in Members) 
             {
-                listMember += m.ToString() + "\n";
+                if (m != null)
+                {
+                    listMember += m.Name.ToString() + ",";
+                }
+                
             }
-            return $"Id: {Id}\nMembers: {listMember}, Depature: {Depature}, Arrival: {Arrival}, Destanation: {Destanation}";
+            return $"Id: {Id}\nMembers: {listMember} Depature: {Depature}, Arrival: {Arrival}, Destanation: {Destanation}, Boat: {Boat.Name}";
         }
     }
 }

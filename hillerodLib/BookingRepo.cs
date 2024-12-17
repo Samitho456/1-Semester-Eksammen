@@ -21,11 +21,13 @@ namespace hillerodLib
             return _bookings.Remove(id, out deletedBooking);
         }
 
-        //Updates a Booking with a new booking
+        //Updates a Booking with a new booking and same id
         public bool UpdateBooking(int id, Booking updateBooking)
         {
             if (_bookings.ContainsKey(id))
             {
+                int temp = _bookings[id].Id;
+                updateBooking.Id = temp;
                 _bookings[id] = updateBooking;
                 return true;
             }

@@ -32,9 +32,7 @@ namespace hillerodLib
         //Updates a report to a new one.
         //Ensures valid arguments using the FindReportById method
         // Old report is deleted and a new one is added, ensuring that the object's key is always the same as the object's id. 
-        public bool UpdateReport(int id, DamageReport report)
-        {
-            FindReportById(id);
+        public bool UpdateReport(int id, DamageReport report
             DamageReport oldReport = FindReportById(id);
             DeleteReport(id,out oldReport);
             AddReport(report);
