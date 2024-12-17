@@ -9,8 +9,13 @@ namespace hillerodLib
     // Constructor
     public abstract class User
     {
+
         private static  int _id = 1;
         public int Id { get; }
+
+        public static int NextId = 1;
+        public int Id { get; set; }
+
         public string Name { get; set; }
         public bool IsAdmin { get; set; }
         public string Email { get; set; }
@@ -18,11 +23,10 @@ namespace hillerodLib
 
         protected User(string name, string email, string phonenumber)
         {
-            Id = _id;
+            Id = NextId++;
             Name = name;
             Email = email;
             PhoneNumber = phonenumber;
-            _id++;
         }
     }
 }
