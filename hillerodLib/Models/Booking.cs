@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace hillerodLib
+namespace hillerodLib.Models
 {
     public class Booking
     {
 
         // propertys 
-        public List<Member> Members {  get; set; }
+        public List<Member> Members { get; set; }
         private static int nextId = 1;
-        public int Id {  get; set; }
+        public int Id { get; set; }
         public DateTime Depature { get; set; }
         public DateTime Arrival { get; set; }
         public string Destanation { get; set; }
@@ -34,13 +34,13 @@ namespace hillerodLib
         public override string ToString()
         {
             string listMember = "";
-            foreach (Member m in Members) 
+            foreach (Member m in Members)
             {
                 if (m != null)
                 {
                     listMember += m.Name.ToString() + ",";
                 }
-                
+
             }
             return $"Id: {Id}\nMembers: {listMember} Depature: {Depature}, Arrival: {Arrival}, Destanation: {Destanation}, Boat: {Boat.Name}";
         }

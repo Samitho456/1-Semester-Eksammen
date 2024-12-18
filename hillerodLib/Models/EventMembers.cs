@@ -1,11 +1,11 @@
-﻿    namespace hillerodLib
+﻿namespace hillerodLib.Models
 {
     public class EventMembers
     {
         public List<Member> Members { get; } = new List<Member>();
         public Event CurrentEvent { get; }
         public int MaxAmount { get; set; }
-        
+
         // Constructor without max amount of members
         public EventMembers()
         {

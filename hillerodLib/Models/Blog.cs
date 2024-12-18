@@ -1,10 +1,11 @@
-﻿using System;
+﻿using hillerodLib.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace hillerodLib
+namespace hillerodLib.Models
 {
     public class Blog
     {
@@ -22,7 +23,7 @@ namespace hillerodLib
         }
         public override string ToString()
         {
-            return($"Id: { Id}" + "\n" + $"Name: { Name}" + "\n" + $"Description: {Description}" + "\n" + $"Type: {Type}");
+            return $"Id: {Id}" + "\n" + $"Name: {Name}" + "\n" + $"Description: {Description}" + "\n" + $"Type: {Type}";
         }
     }
 }

@@ -1,13 +1,15 @@
-﻿using System;
+﻿using hillerodLib.Enums;
+using hillerodLib.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace hillerodLib
+namespace hillerodLib.Services.Repos
 {
     public class BlogRepo
-     
+
     {
         private Dictionary<int, Blog> _blogRepo = new Dictionary<int, Blog>();
 
@@ -32,7 +34,7 @@ namespace hillerodLib
                 _blogRepo[id].Name = blog.Name;
                 _blogRepo[id].Description = blog.Description;
                 _blogRepo[id].Type = blog.Type;
-                
+
             }
         }
 
@@ -47,20 +49,20 @@ namespace hillerodLib
             }
             return null;
         }
-            // Finding a blog by type, and return a list of blogs by that type
+        // Finding a blog by type, and return a list of blogs by that type
 
 
-           public List<Blog> GetBlogByEnum(BlogType blogEnum)
+        public List<Blog> GetBlogByEnum(BlogType blogEnum)
+        {
+            List<Blog> reault = new List<Blog>();
+
+            foreach (Blog b in _blogRepo.Values)
             {
-                List<Blog> reault = new List<Blog>();
-
-                foreach (Blog b in _blogRepo.Values)
-                {
-                    if (b.Type == blogEnum)
-                        reault.Add(b);
-                }
-                return reault;
+                if (b.Type == blogEnum)
+                    reault.Add(b);
             }
-        
+            return reault;
+        }
+
     }
 }

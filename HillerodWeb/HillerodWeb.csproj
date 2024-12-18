@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\Boats.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\hillerodLib\hillerodLib.csproj" />
   </ItemGroup>
 

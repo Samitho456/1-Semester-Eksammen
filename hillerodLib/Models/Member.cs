@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace hillerodLib
+namespace hillerodLib.Models
 {
     public class Member : User
     {
         // Constructor
-        public Member(string name, string email, string phonenumber) : base (name, email, phonenumber)
-        { 
+        public Member(string name, string email, string phonenumber) : base(name, email, phonenumber)
+        {
             IsAdmin = false;
         }
 

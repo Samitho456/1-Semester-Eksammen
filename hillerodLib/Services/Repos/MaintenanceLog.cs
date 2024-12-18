@@ -1,10 +1,12 @@
-﻿using System;
+﻿using hillerodLib.Exceptions;
+using hillerodLib.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace hillerodLib
+namespace hillerodLib.Services.Repos
 {
     public class MaintenanceLog
     {
@@ -32,11 +34,11 @@ namespace hillerodLib
         //Updates a report to a new one.
         //Ensures valid arguments using the FindReportById method
         // Old report is deleted and a new one is added, ensuring that the object's key is always the same as the object's id. 
-        public bool UpdateReport(int id, DamageReport report) 
-        { 
+        public bool UpdateReport(int id, DamageReport report)
+        {
             DamageReport oldReport = FindReportById(id);
-            DeleteReport(id,out oldReport);
-            AddReport(report);
+            report.Id = id;
+            oldReport = report;
             return true;
 
         }
@@ -53,7 +55,7 @@ namespace hillerodLib
                 }
             }
             return reports;
-            
+
         }
         //Returns a list of all reports in the Maintenance Log.
         public List<DamageReport> GetAllReports()

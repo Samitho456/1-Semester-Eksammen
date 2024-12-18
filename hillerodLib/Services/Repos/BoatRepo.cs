@@ -1,4 +1,8 @@
-﻿namespace hillerodLib
+﻿using hillerodLib.Enums;
+using hillerodLib.Exceptions;
+using hillerodLib.Models;
+
+namespace hillerodLib.Services.Repos
 {
     public class BoatRepo
     {

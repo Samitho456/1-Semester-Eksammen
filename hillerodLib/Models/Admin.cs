@@ -1,26 +1,27 @@
-﻿using System;
+﻿using hillerodLib.Services.Repos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace hillerodLib
+namespace hillerodLib.Models
 {
     public class Admin : User
 
     {   // Creates the Admin class that inherits from the User base class, only changing IsAdmin to true
-        public Admin(string name, string email, string phonenumber) : base (name, email, phonenumber) 
+        public Admin(string name, string email, string phonenumber) : base(name, email, phonenumber)
         {
             IsAdmin = true;
         }
         // The following methods makes use of the existing methods within the objects, and gives the admin the methods needed for CRUD.
-        public Event AddEventInRepo(Event newEvent, EventRepo eventRepo )
+        public Event AddEventInRepo(Event newEvent, EventRepo eventRepo)
         {
             eventRepo.AddEvent(newEvent);
             return newEvent;
         }
 
-        public Event DeleteEventInRepo(int id, Event badEvent, EventRepo eventRepo )
+        public Event DeleteEventInRepo(int id, Event badEvent, EventRepo eventRepo)
         {
             eventRepo.DeleteEvent(id, out badEvent);
             return badEvent;
@@ -67,7 +68,7 @@ namespace hillerodLib
 
         public Member UpdateMemberInRepo(int id, Member updatedMember, MemberRepo memberRepo)
         {
-            memberRepo.UpdateMember(id,updatedMember);
+            memberRepo.UpdateMember(id, updatedMember);
             return updatedMember;
         }
 
@@ -86,13 +87,13 @@ namespace hillerodLib
 
         public DamageReport DeleteDamageReportInLog(int id, Boat boat, DamageReport report)
         {
-            boat.MaintenanceLog.DeleteReport(id,out report);
+            boat.MaintenanceLog.DeleteReport(id, out report);
             return report;
         }
 
         public DamageReport FindDamageReportInLog(Boat boat, DamageReport report)
         {
-           return boat.MaintenanceLog.FindReportById(report.Id);
+            return boat.MaintenanceLog.FindReportById(report.Id);
         }
 
         public bool BoatIsHome(Boat boat)
@@ -100,7 +101,7 @@ namespace hillerodLib
             if (boat == null)
             {
                 return false;
-            }       
+            }
             return boat.IsAvailable = true;
         }
 
@@ -109,7 +110,7 @@ namespace hillerodLib
             return $"Id: {Id}, Name: {Name}, IsAdmin: {IsAdmin}, Email: {Email}, PhoneNumber: {PhoneNumber} ";
         }
 
-        
+
     }
 
 

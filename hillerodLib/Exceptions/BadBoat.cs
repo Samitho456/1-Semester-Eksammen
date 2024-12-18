@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace hillerodLib
+namespace hillerodLib.Exceptions
 {
     //General Exception Classes For Boats
     public class BadBoat : Exception
