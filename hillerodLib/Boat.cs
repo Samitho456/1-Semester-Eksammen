@@ -19,6 +19,7 @@ namespace hillerodLib
         public bool IsAvailable { get; set; }
         public MaintenanceLog MaintenanceLog { get; set; }
 
+        // Constructor
         public Boat (int id, string name, BoatType type, string model, string sailNumber, string engine, int measures, string buildYear)
         {
             Id = id;
@@ -33,29 +34,28 @@ namespace hillerodLib
             IsAvailable = true;
         }
 
-        //Uses the DamnageReport Class Methods to perform Crud operations on its maintenance log
+        //Uses the DamageReport Class Methods to perform Crud operations on its maintenance log
         public DamageReport AddDamageReport(DamageReport report)
         {
             MaintenanceLog.AddReport(report);
             IsAvailable = false;
             return report;
-
         }
 
-        public DamageReport UpdateDamageReport(DamageReport report)
+        // Updated DamageReport using the old report Id and the new updated report
+        // Updates DamageReport with a given id, with a new damageReport
+        public DamageReport UpdateDamageReport(int id, DamageReport report)
         {
-            MaintenanceLog.UpdateReport(report.Id, report);
-            return report;
-
-        }
-
-        public DamageReport DeleteDamageReport(DamageReport report)
-        {
-            MaintenanceLog.DeleteReport(report.Id, out report);
+            MaintenanceLog.UpdateReport(id, report);
             return report;
         }
 
-
+        // Deletes DamageReport with the given Id and outputs the deleted report
+        public DamageReport DeleteDamageReport(int id, out DamageReport report)
+        {
+            MaintenanceLog.DeleteReport(id, out report);
+            return report;
+        }
 
         public override string ToString()
         {

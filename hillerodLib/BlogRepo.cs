@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace hillerodLib
 {
     public class BlogRepo
-     
     {
         private Dictionary<int, Blog> _blogRepo = new Dictionary<int, Blog>();
 
@@ -28,17 +27,12 @@ namespace hillerodLib
         {
             if (_blogRepo.ContainsKey(id))
             {
-                _blogRepo[id].Id = blog.Id;
-                _blogRepo[id].Name = blog.Name;
-                _blogRepo[id].Description = blog.Description;
-                _blogRepo[id].Type = blog.Type;
-                
+                _blogRepo[id] = blog;
             }
         }
 
         // Finding a blog by id, if it contains a valid id
         // If blog id is invalid, return null
-
         public Blog GetBlogById(int id)
         {
             if (_blogRepo.ContainsKey(id))
@@ -52,8 +46,8 @@ namespace hillerodLib
 
            public List<Blog> GetBlogByEnum(BlogType blogEnum)
             {
-                List<Blog> reault = new List<Blog>();
-
+                List<Blog> reault = new List<Blog>(); //create list of the results
+                //goes through ever BlogItem and check if the BlogType is the same as the searched type
                 foreach (Blog b in _blogRepo.Values)
                 {
                     if (b.Type == blogEnum)

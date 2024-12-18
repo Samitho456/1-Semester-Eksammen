@@ -9,7 +9,7 @@ namespace hillerodLib
     public class Booking
     {
 
-        // propertys 
+        // properties 
         public List<Member> Members {  get; set; }
         private static int nextId = 1;
         public int Id {  get; set; }
@@ -18,7 +18,7 @@ namespace hillerodLib
         public string Destanation { get; set; }
         public Boat Boat { get; set; }
 
-        // Constructor 
+        // Constructor
         public Booking(List<Member> members, DateTime depature, DateTime arrival, string destanation, Boat boat)
         {
             Id = nextId++;
@@ -28,12 +28,12 @@ namespace hillerodLib
             Destanation = destanation;
             Boat = boat;
             boat.IsAvailable = false;
-
         }
 
         public override string ToString()
         {
             string listMember = "";
+            // Adds every member in the booking to a string and add the string to the ToString
             foreach (Member m in Members) 
             {
                 if (m != null)

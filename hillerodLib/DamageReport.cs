@@ -9,10 +9,12 @@ namespace hillerodLib
 {
     public class DamageReport
     {
+        // Properties
         public int Id { get; set; }
         public string Date { get; set; }
-
         public string Description { get; set; }
+
+        // Constructor
         public DamageReport(int id, string date, string description) 
         {
             Id = id;

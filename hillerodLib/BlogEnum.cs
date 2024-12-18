@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace hillerodLib
 {
+    // Emun to show which type the blogItems is
     public enum BlogType
     {
         Information,
