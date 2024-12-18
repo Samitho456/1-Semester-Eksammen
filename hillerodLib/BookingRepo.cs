@@ -13,7 +13,7 @@ namespace hillerodLib
         // Adds a booking too _bookings Dictionary if boat is available
         public bool AddBooking(Booking newBooking)
         {
-            if(_bookings[newBooking.Id].Boat.IsAvailable = true) { 
+            if(_bookings[newBooking.Id].Boat.IsAvailable) { 
                 return _bookings.TryAdd(newBooking.Id, newBooking);
             }
             return false;

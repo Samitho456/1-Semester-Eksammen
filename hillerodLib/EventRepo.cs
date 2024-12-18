@@ -22,7 +22,7 @@ namespace hillerodLib
         
 
         //Deletes an Event from the EventRepo
-        // Ensures correct arguments by calling the GetEventById method
+        //Ensures correct arguments by calling the GetEventById method
         public bool DeleteEvent(int id, out Event deletedEvent)
         {
             GetEventById(id);   
