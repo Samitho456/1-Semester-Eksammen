@@ -4,7 +4,7 @@
     {
         // Properties
         public List<Member> Members { get; } = new List<Member>();
-        public Event CurrentEvent { get; }
+        public Booking CurrentEvent { get; }
         public int MaxAmount { get; set; }
         
         // Constructor without max amount of members

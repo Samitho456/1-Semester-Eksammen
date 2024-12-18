@@ -8,6 +8,8 @@ namespace hillerodLib
 {
     public class Boat
     {
+        // Properties
+        private static int _nextId = 1;
         public int Id { get; set; }
         public string Name { get; set; }
         public BoatType Type { get; set; }
@@ -20,9 +22,9 @@ namespace hillerodLib
         public MaintenanceLog MaintenanceLog { get; set; }
 
         // Constructor
-        public Boat (int id, string name, BoatType type, string model, string sailNumber, string engine, int measures, string buildYear)
+        public Boat (string name, BoatType type, string model, string sailNumber, string engine, int measures, string buildYear)
         {
-            Id = id;
+            Id = _nextId++;
             Name = name;
             Type = type;
             Model = model;
@@ -59,8 +61,7 @@ namespace hillerodLib
 
         public override string ToString()
         {
-            return ($"Id: {Id}" + " " + "\n" + $"Name: {Name}" + "\n" + $"Type: {Type}" + "\n" + $"Model: {Model}" + "\n" 
-                + $"Sail Number: {SailNumber}" + "\n" + $"Engine: {Engine}" + "\n" + $"Measures: {Measures}" + "\n" + $"Build year: {BuildingYear}");
+            return $"Id: {Id}, Name: {Name}, Type: {Type}, IsAveable: {IsAvailable}, Model: {Model}, Sail Number: {SailNumber}, Engine: {Engine}, Measures: {Measures}, Build year: {BuildingYear}";
         }
     }
 }

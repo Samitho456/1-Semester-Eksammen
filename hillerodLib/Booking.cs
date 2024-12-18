@@ -8,10 +8,9 @@ namespace hillerodLib
 {
     public class Booking
     {
-
         // properties 
         public List<Member> Members {  get; set; }
-        private static int nextId = 1;
+        private static int _nextId = 1;
         public int Id {  get; set; }
         public DateTime Depature { get; set; }
         public DateTime Arrival { get; set; }
@@ -21,7 +20,7 @@ namespace hillerodLib
         // Constructor
         public Booking(List<Member> members, DateTime depature, DateTime arrival, string destanation, Boat boat)
         {
-            Id = nextId++;
+            Id = _nextId++;
             Members = members;
             Depature = depature;
             Arrival = arrival;

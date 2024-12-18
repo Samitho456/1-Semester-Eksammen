@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace hillerodLib
 {
@@ -16,10 +17,11 @@ namespace hillerodLib
         // Adds a booking too _bookings Dictionary if boat is available
         public bool AddBooking(Booking newBooking)
         {
-            // Checks if boat is available
-            if(_bookings[newBooking.Id].Boat.IsAvailable) { 
-                return _bookings.TryAdd(newBooking.Id, newBooking); // adds boat to dictionary
-            }
+            //Checks if boat is available
+            if (!_bookings.ContainsKey(newBooking.Id))
+                {
+                    return _bookings.TryAdd(newBooking.Id, newBooking); // adds boat to dictionary
+                }
             return false;
         }
 
@@ -57,6 +59,49 @@ namespace hillerodLib
             }
             return null!;
         }
+
+        public void UpdateAvailable(DateTime now)
+        {
+            foreach (Booking b in _bookings.Values)
+            {
+                if (b.Arrival.CompareTo(now) < 0)
+                {                
+                    b.Boat.IsAvailable = true;
+                }
+            }
+        }
+
+        public void UpdateAvailable(DateOnly date)
+        {
+            UpdateAvailable(date.ToDateTime(TimeOnly.MinValue));
+        }
+
+        // Search through _events's DateTime values and if anything exsist in the dictionary adds them to a list witch is then returned.
+        public List<Booking> SearchBoatsNotBookedOn(DateOnly date)
+        {
+            UpdateAvailable(date);
+            List<Booking> results = new List<Booking>();
+            Console.WriteLine("booking length" + _bookings.Values.Count);
+            foreach (Booking b in _bookings.Values)
+            {
+                DateOnly depature = DateOnly.FromDateTime(b.Depature);
+                DateOnly arrival = DateOnly.FromDateTime(b.Arrival);
+
+                Console.WriteLine("de:");
+                Console.WriteLine(depature.CompareTo(date));
+                Console.WriteLine("Ar.");
+                Console.WriteLine(arrival.CompareTo(date));
+                Console.WriteLine();
+                if (depature.CompareTo(date) >= 0 || arrival.CompareTo(date) <= 0)
+                {
+                    results.Add(b);
+                }
+            }
+            return results;
+        }
+
+
+
 
     }
 }

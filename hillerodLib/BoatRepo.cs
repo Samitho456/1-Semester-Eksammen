@@ -2,6 +2,9 @@
 {
     public class BoatRepo
     {
+        // Constructor
+        public BoatRepo() { }
+
         private Dictionary<int, Boat> _boatList = new Dictionary<int, Boat>();
 
         // Add a boat to dictonary
@@ -61,6 +64,31 @@
         public List<Boat> GetAllBoats()
         {
             return _boatList.Values.ToList();
+        }
+
+        public List<Boat> FindAvailableBoats()
+        {
+            List<Boat> result = new List<Boat> ();
+            foreach (Boat boat in _boatList.Values)
+            {
+                if (boat.IsAvailable)
+                {
+                    result.Add(boat);
+                }
+            }
+            return result;
+        }
+
+        public List<Boat> FindAvailableBoatsByDate(BookingRepo bookingRepo, DateOnly date)
+        {
+            List<Boat> result = new List<Boat>();
+
+            foreach(Booking b in bookingRepo.SearchBoatsNotBookedOn(date))
+            {
+                if (_boatList.ContainsKey(b.Boat.Id))
+                result.Add(b.Boat);
+            }
+            return result;
         }
     }
 }

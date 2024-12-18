@@ -12,6 +12,7 @@ namespace hillerodLib
         SailBoat,
         MotorBoat,
         Dinghy,
+        RowBoat,
         Yard
     }
 }
