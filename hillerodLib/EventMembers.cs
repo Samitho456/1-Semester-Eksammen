@@ -2,6 +2,7 @@
 {
     public class EventMembers
     {
+        // Properties
         public List<Member> Members { get; } = new List<Member>();
         public Event CurrentEvent { get; }
         public int MaxAmount { get; set; }
@@ -18,10 +19,11 @@
             MaxAmount = max;
         }
 
-        // Addsmember if the member is not already a part of event and if there is space for the new member
-        // Return true if member is added 
+        // Adds member if the member is not already a part of event and if there is space for the new member
+        // Return true if member is added
         public bool AddMember(Member member)
         {
+            //checks if member is part of event and if member list is less than max amount
             if (!Members.Contains(member) && Members.Count < MaxAmount)
             {
                 Members.Add(member);
@@ -33,6 +35,7 @@
         // Deletes member with the given Id
         public bool DeleteEventMember(int id)
         {
+            // Finds member with specific Id
             foreach (Member member in Members)
             {
                 if (member.Id == id)
@@ -44,14 +47,13 @@
             return false;
         }
 
-        // Updates member with the given Id
+        // Updates member with the given Id's infomation with a new members infomation
         public bool UpdateEventMember(int id, Member UpdatedMember)
         {
             foreach (Member member in Members)
             {
                 if (member.Id == id)
                 {
-                    member.Id = UpdatedMember.Id;
                     member.Name = UpdatedMember.Name;
                     member.Email = UpdatedMember.Email;
                     member.PhoneNumber = UpdatedMember.PhoneNumber;

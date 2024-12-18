@@ -12,6 +12,8 @@ namespace hillerodLib
         public string Name { get; set; }
         public string Description { get; set; }
         public BlogType Type { get; set; }
+
+        // Constructor
         public Blog(int id, string name, string description, BlogType type)
         {
             Id = id;
@@ -20,6 +22,7 @@ namespace hillerodLib
             Type = type;
 
         }
+
         public override string ToString()
         {
             return($"Id: { Id}" + "\n" + $"Name: { Name}" + "\n" + $"Description: {Description}" + "\n" + $"Type: {Type}");

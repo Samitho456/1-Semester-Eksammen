@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace hillerodLib
 {
+    //Enum to determin the type of the boat
     public enum BoatType
     {
         SailBoat,

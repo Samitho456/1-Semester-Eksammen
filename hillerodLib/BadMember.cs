@@ -10,13 +10,16 @@ namespace hillerodLib
     public class BadMember : Exception
 
     {
+        // Constructor
         public BadMember(string message) : base(message) { }
 
+        // Two Members are identical
         public class DuplicateMember : BadMember 
         {
             public DuplicateMember(string message) : base(message) { }  
         }
 
+        // Id is not valid
         public class FaultyId : BadMember
         {
             public FaultyId(string message) : base(message) { }
