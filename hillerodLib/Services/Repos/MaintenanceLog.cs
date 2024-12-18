@@ -12,65 +12,66 @@ namespace hillerodLib.Services.Repos
     {
         private Dictionary<int, DamageReport> _log = new Dictionary<int, DamageReport>();
 
+        // Constructor
         public MaintenanceLog() { }
-        //Adds a Damage Report to the Maintenance log. 
-        // Throws an exception if the argument is invalid. 
+
+        // Adds a Damage Report to the Maintenance log
         public void AddReport(DamageReport report)
         {
+            // Throws an exception if the argument is invalid 
             if (!_log.TryAdd(report.Id, report))
             {
                 throw new BadReport.DuplicateReport($"A report with ID {report.Id} already exists.");
             }
         }
 
-        //Deletes a report from the Maintenance Log.
-        //Ensures valid arguments using the FindReportById method. 
+        // Deletes a report from the Maintenance Log
         public bool DeleteReport(int id, out DamageReport report)
         {
+            // Ensures valid arguments using the FindReportById method
             FindReportById(id);
             return _log.Remove(id, out report);
         }
 
-        //Updates a report to a new one.
-        //Ensures valid arguments using the FindReportById method
-        // Old report is deleted and a new one is added, ensuring that the object's key is always the same as the object's id. 
-        public bool UpdateReport(int id, DamageReport report)
+        // Updates a report to a new one
+        public bool UpdateReport(int id, DamageReport report) 
         {
-            DamageReport oldReport = FindReportById(id);
-            DeleteReport(id, out oldReport);
-            AddReport(report);
+            // Ensures valid arguments using the FindReportById method
+            DamageReport oldReport = FindReportById(id); // Throws exeption if no Report found
+            report.Id = id; // Change new report Id to old Id
+            oldReport = report; // Update oldReport to new report
             return true;
-
         }
+
         // A method to filter logs by date. 
         public List<DamageReport> FilterLogsByDate(string date)
         {
-            string FilterName = date.ToLower().Trim();
-            List<DamageReport> reports = new List<DamageReport>();
+            string FilterName = date.ToLower().Trim(); // Change search Word to lower and remove whitespace
+
+            List<DamageReport> reports = new List<DamageReport>(); // Create List to add results to
+
+            // Goes through ever Damage Report
             foreach (var report in _log.Values)
             {
+                // check if searchword matches date on DamageReport
                 if (report.Date.ToLower().Trim() == FilterName)
                 {
                     reports.Add(report);
                 }
             }
             return reports;
-
         }
+
         //Returns a list of all reports in the Maintenance Log.
         public List<DamageReport> GetAllReports()
         {
-            List<DamageReport> reports = new List<DamageReport>();
-            foreach (var e in _log)
-            {
-                reports.Add(e.Value);
-            }
-            return reports;
+            return _log.Values.ToList();
         }
+
         // Finds a report based on id.
-        // Throws an exception if argument is invalid.
         public DamageReport FindReportById(int id)
         {
+            // Throws an exception if argument is invalid.
             if (!_log.ContainsKey(id))
             {
                 throw new BadReport.FaultyIdReport($"No report found with ID {id}");

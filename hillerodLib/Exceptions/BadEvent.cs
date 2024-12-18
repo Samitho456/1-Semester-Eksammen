@@ -11,15 +11,17 @@ namespace hillerodLib.Exceptions
     public class BadEvent : Exception
 
     {
+        // Constructor
         public BadEvent(string message) : base(message) { }
 
+        // Two Events have the same Id
         public class DuplicateEvent : BadEvent
         {
             public DuplicateEvent(string message) : base(message) { }
-
         }
 
-        public class FaultyId : BadEvent
+        // Id is not valid
+        public class FaultyId : BadEvent 
         {
             public FaultyId(string message) : base(message) { }
         }

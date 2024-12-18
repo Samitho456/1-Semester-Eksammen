@@ -9,11 +9,13 @@ namespace hillerodLib.Models
 {
     public class DamageReport
     {
+        // Properties
         public int Id { get; set; }
         public string Date { get; set; }
-
         public string Description { get; set; }
-        public DamageReport(int id, string date, string description)
+
+        // Constructor
+        public DamageReport(int id, string date, string description) 
         {
             Id = id;
             Date = date;

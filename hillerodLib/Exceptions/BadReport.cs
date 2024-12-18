@@ -10,17 +10,20 @@ namespace hillerodLib.Exceptions
     public class BadReport : Exception
 
     {
+        // Constructor
         public BadReport(string message) : base(message) { }
 
-
-        public class FaultyIdReport : BadReport
-        {
-            public FaultyIdReport(string message) : base(message) { }
-        }
-
+        // Two Reports have the same Id
         public class DuplicateReport : BadReport
         {
             public DuplicateReport(string message) : base(message) { }
+        }
+
+
+        // Id is not valid
+        public class FaultyIdReport : BadReport
+        {
+            public FaultyIdReport(string message) : base(message) { }
         }
 
 

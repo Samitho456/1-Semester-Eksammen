@@ -11,42 +11,45 @@ namespace hillerodLib.Services.Repos
     {
         private Dictionary<int, Booking> _bookings = new Dictionary<int, Booking>();
 
-        // Adds a booking too _bookings Dictionary
-        public void AddBooking(Booking newBooking)
+        // Constructor
+        public BookingRepo() { }
+
+        // Adds a booking too _bookings Dictionary if boat is available
+        public bool AddBooking(Booking newBooking)
         {
-            _bookings.TryAdd(newBooking.Id, newBooking);
-        }
-        // Deletes a Booking
-        public bool DeleteBooking(int id, out Booking deletedBooking)
-        {
-            return _bookings.Remove(id, out deletedBooking);
+            // Checks if boat is available
+            if(_bookings[newBooking.Id].Boat.IsAvailable) { 
+                return _bookings.TryAdd(newBooking.Id, newBooking); // adds boat to dictionary
+            }
+            return false;
         }
 
-        //Updates a Booking with a new booking and same id
+        // Deletes a Booking with a given id and output deleted booking
+        public bool DeleteBooking(int id, out Booking deletedBooking)
+        {
+            // True if booking is removed
+            return _bookings.Remove(id, out deletedBooking);    
+        }
+
+        // Updates a Booking with a new booking and same id
         public bool UpdateBooking(int id, Booking updateBooking)
         {
             if (_bookings.ContainsKey(id))
             {
-                int temp = _bookings[id].Id;
-                updateBooking.Id = temp;
-                _bookings[id] = updateBooking;
+                updateBooking.Id = id; //sets the id of the new booking to the id of the old booking
+                _bookings[id] = updateBooking; //updates the booking
                 return true;
             }
             return false;
         }
 
-        //Returns all Bookings made
+        // Returns all Bookings made
         public List<Booking> GetAllBookings()
         {
-            List<Booking> bookings = new List<Booking>();
-            foreach (var b in _bookings)
-            {
-                bookings.Add(b.Value);
-            }
-            return bookings;
+            return _bookings.Values.ToList();
         }
 
-        //Returns a specific Booking if Id exsist
+        // Returns a specific Booking if Id exsist
         public Booking GetBookingById(int id)
         {
             if (_bookings.ContainsKey(id))

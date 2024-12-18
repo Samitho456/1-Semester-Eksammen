@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace hillerodLib.Models
 {
     public class Event
-    {
-        // Creating propertys
+    {     
+        // properties
         private static int nextId = 1;
         public int Id { get; set; }
         public string Name { get; set; }
@@ -18,9 +18,7 @@ namespace hillerodLib.Models
         public string Description { get; set; }
         public EventMembers Members { get; set; }
 
-
-
-        // Creating the constructors 
+        // Constructor without max amount of members
         public Event(string name, DateTime dateStart, DateTime dateEnd, string description)
         {
             Id = nextId++;
@@ -29,8 +27,9 @@ namespace hillerodLib.Models
             DateEnd = dateEnd;
             Description = description;
             Members = new EventMembers();
-        }
-
+        }        
+        
+        // Constructor with max amount of members
         public Event(string name, DateTime dateStart, DateTime dateEnd, string description, int maxMembers)
         {
             Id = nextId++;
@@ -41,8 +40,6 @@ namespace hillerodLib.Models
             Members = new EventMembers(maxMembers);
         }
 
-
-        // overriding ToString to creat our own ToString
         public override string ToString()
         {
             return $"Id: {Id}, Name: {Name}, Date Start : {DateStart}, Date End : {DateEnd}, Description: {Description}";
