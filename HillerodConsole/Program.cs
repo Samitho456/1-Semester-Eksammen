@@ -1,4 +1,7 @@
-﻿using hillerodLib;
+﻿using hillerodLib.Enums;
+using hillerodLib.Exceptions;
+using hillerodLib.Models;
+using hillerodLib.Services.Repos;
 
 //intialize repos
 MemberRepo memberRepo = new MemberRepo();

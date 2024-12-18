@@ -1,0 +1,43 @@
+﻿@page
+@model hillerodsejlklubWebApp.Pages.BoatPages.BoatPageModel
+@{
+    ViewData["Title"] = "Boat List";
+}
+
+<h1>Boat List</h1>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Model</th>
+            <th>Sail Number</th>
+            <th>Engine</th>
+            <th>Measurements</th>
+            <th>Building Year</th>
+            <th>Availability</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var boat in Model.Boats)
+        {
+            <tr>
+                <td>@boat.Id</td>
+                <td>@boat.Name</td>
+                <td>@boat.Type</td>
+                <td>@boat.Type</td>
+                <td>@boat.SailNumber</td>
+                <th>@boat.Engine</th>
+                <th>@boat.Measures</th>
+                <th>@boat.BuildingYear</th>
+                <th>@boat.IsAvailable</th>
+                <td>
+                    <a href="#">View</a> | <a href="#">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
