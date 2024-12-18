@@ -1,4 +1,12 @@
+using hillerodLib.Services.Repos;
+using hillerodLib.Models;
+using hillerodLib.Exceptions;
+using hillerodLib.Enums;
+using hillerodLib.MockData;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton(MockData._boatRepo);
 
 // Add services to the container.
 builder.Services.AddRazorPages();

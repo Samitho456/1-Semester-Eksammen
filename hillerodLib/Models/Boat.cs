@@ -1,10 +1,12 @@
-﻿using System;
+﻿using hillerodLib.Enums;
+using hillerodLib.Services.Repos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace hillerodLib
+namespace hillerodLib.Models
 {
     public class Boat
     {
@@ -19,7 +21,7 @@ namespace hillerodLib
         public bool IsAvailable { get; set; }
         public MaintenanceLog MaintenanceLog { get; set; }
 
-        public Boat (int id, string name, BoatType type, string model, string sailNumber, string engine, int measures, string buildYear)
+        public Boat(int id, string name, BoatType type, string model, string sailNumber, string engine, int measures, string buildYear)
         {
             Id = id;
             Name = name;
@@ -59,8 +61,8 @@ namespace hillerodLib
 
         public override string ToString()
         {
-            return ($"Id: {Id}" + " " + "\n" + $"Name: {Name}" + "\n" + $"Type: {Type}" + "\n" + $"Model: {Model}" + "\n" 
-                + $"Sail Number: {SailNumber}" + "\n" + $"Engine: {Engine}" + "\n" + $"Measures: {Measures}" + "\n" + $"Build year: {BuildingYear}");
+            return $"Id: {Id}" + " " + "\n" + $"Name: {Name}" + "\n" + $"Type: {Type}" + "\n" + $"Model: {Model}" + "\n"
+                + $"Sail Number: {SailNumber}" + "\n" + $"Engine: {Engine}" + "\n" + $"Measures: {Measures}" + "\n" + $"Build year: {BuildingYear}";
         }
     }
 }

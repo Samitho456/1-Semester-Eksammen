@@ -1,0 +1,36 @@
+﻿table {
+    width: 100%;
+    border-collapse: collapse; /* Merges borders for cleaner look */
+}
+
+th, td {
+    border: 1px solid #ddd; /* Light gray borders */
+    padding: 12px; /* Adds padding to cells */
+    text-align: left; /* Aligns text to the left */
+}
+
+th {
+    background-color: #f2f2f2; /* Light gray background for headers */
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Zebra-striping rows */
+}
+
+tr:hover {
+    background-color: #f1f1f1; /* Hover effect for rows */
+}
+
+.book-button {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #007bff; /* Blue color */
+    color: white;
+    text-decoration: none;
+    border-radius: 4px; /* Rounded edges */
+}
+
+    .book-button:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }

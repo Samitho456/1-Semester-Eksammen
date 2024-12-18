@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace hillerodLib
+namespace hillerodLib.Models
 {
     public class Event
-    {     
+    {
         // Creating propertys
         private static int nextId = 1;
         public int Id { get; set; }
@@ -29,8 +29,8 @@ namespace hillerodLib
             DateEnd = dateEnd;
             Description = description;
             Members = new EventMembers();
-        }        
-        
+        }
+
         public Event(string name, DateTime dateStart, DateTime dateEnd, string description, int maxMembers)
         {
             Id = nextId++;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace hillerodLib
+namespace hillerodLib.Enums
 {
     public enum BlogType
     {

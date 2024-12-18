@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace hillerodLib
+namespace hillerodLib.Exceptions
 
 {
     // General Exception Classes for Events
@@ -19,7 +19,7 @@ namespace hillerodLib
 
         }
 
-        public class FaultyId : BadEvent 
+        public class FaultyId : BadEvent
         {
             public FaultyId(string message) : base(message) { }
         }

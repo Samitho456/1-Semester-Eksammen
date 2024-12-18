@@ -1,11 +1,13 @@
-﻿using System;
+﻿using hillerodLib.Exceptions;
+using hillerodLib.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace hillerodLib
+namespace hillerodLib.Services.Repos
 {
     public class EventRepo
     {
@@ -14,18 +16,18 @@ namespace hillerodLib
         // Adds an Event. Throws an exception if an Event object's id is already in the Repo.  
         public void AddEvent(Event newEvent)
         {
-            if(!_events.TryAdd(newEvent.Id, newEvent))
+            if (!_events.TryAdd(newEvent.Id, newEvent))
                 throw new BadEvent.DuplicateEvent($"Event with ID {newEvent.Id} aklready exists.");
 
         }
 
-        
+
 
         //Deletes an Event from the EventRepo
         // Ensures correct arguments by calling the GetEventById method
         public bool DeleteEvent(int id, out Event deletedEvent)
         {
-            GetEventById(id);   
+            GetEventById(id);
             return _events.Remove(id, out deletedEvent);
         }
 
