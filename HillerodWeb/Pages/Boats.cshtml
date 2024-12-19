@@ -1,5 +1,5 @@
 ﻿@page
-@model HillerodWeb.Pages.BoatPages.BoatsModel
+@model HillerodWeb.Pages.BoatsModel
 @{
     ViewData["Title"] = "Boat List";
 }
@@ -39,7 +39,7 @@
                     @if (boat.IsAvailable)
                         {
         <!-- Active button if boat is available -->
-                        <a href="/BoatPages/BoatPage/@boat.Id" class="book-button">Book Boat</a>
+                        <a href="/BoatPage/@boat.Id" class="book-button">Book Boat</a>
                         }
                     else
                         {
