@@ -18,8 +18,10 @@ namespace hillerodLib
         public bool AddBooking(Booking newBooking)
         {
             //Checks if boat is available
-            if (!_bookings.ContainsKey(newBooking.Id))
+            if (!_bookings.ContainsKey(newBooking.Id) && newBooking.Boat.IsAvailable)
                 {
+                    newBooking.Boat.IsAvailable = false;
+                    UpdateAvailableDT(newBooking.Arrival);
                     return _bookings.TryAdd(newBooking.Id, newBooking); // adds boat to dictionary
                 }
             return false;
@@ -60,48 +62,56 @@ namespace hillerodLib
             return null!;
         }
 
-        public void UpdateAvailable(DateTime now)
+        public void UpdateAvailableDT(DateTime now)
         {
             foreach (Booking b in _bookings.Values)
             {
-                if (b.Arrival.CompareTo(now) < 0)
-                {                
+                if (b.Depature <= now && now <= b.Arrival)
+                {
+                    b.Boat.IsAvailable = false;
+                }
+                else
+                {
                     b.Boat.IsAvailable = true;
+                    b.Active = false;
                 }
             }
         }
 
-        public void UpdateAvailable(DateOnly date)
+        public void UpdateAvailableDO(DateOnly date)
         {
-            UpdateAvailable(date.ToDateTime(TimeOnly.MinValue));
+            DateTime now = date.ToDateTime(TimeOnly.MinValue);
+            foreach (Booking b in _bookings.Values)
+            {
+                if (b.Depature <= now && now <= b.Arrival)
+                {
+                    b.Boat.IsAvailable = false;
+                }
+
+                if (b.Depature < now && now >= b.Arrival && b.Active)
+                {
+                    b.Boat.IsAvailable = true;
+                    b.Active = false;
+                }
+            }
         }
 
         // Search through _events's DateTime values and if anything exsist in the dictionary adds them to a list witch is then returned.
         public List<Booking> SearchBoatsNotBookedOn(DateOnly date)
         {
-            UpdateAvailable(date);
             List<Booking> results = new List<Booking>();
-            Console.WriteLine("booking length" + _bookings.Values.Count);
+
             foreach (Booking b in _bookings.Values)
             {
                 DateOnly depature = DateOnly.FromDateTime(b.Depature);
                 DateOnly arrival = DateOnly.FromDateTime(b.Arrival);
 
-                Console.WriteLine("de:");
-                Console.WriteLine(depature.CompareTo(date));
-                Console.WriteLine("Ar.");
-                Console.WriteLine(arrival.CompareTo(date));
-                Console.WriteLine();
-                if (depature.CompareTo(date) >= 0 || arrival.CompareTo(date) <= 0)
+                if (b.Boat.IsAvailable)
                 {
                     results.Add(b);
                 }
             }
             return results;
         }
-
-
-
-
     }
 }
