@@ -2,7 +2,7 @@ using hillerodLib;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace HillerodWeb.Pages.BoatPages
+namespace HillerodWeb.Pages
 {
     public class BoatsModel : PageModel
     {
