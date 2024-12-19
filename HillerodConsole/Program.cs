@@ -212,8 +212,8 @@ void TestEvent()
 
 void TestMaintenanceLog()
 {
-    DamageReport damageReport = new DamageReport(4, "230425", "Test Description");
-    DamageReport updatedReport = new DamageReport(5, "249902", "Updated Description"); 
+    DamageReport damageReport = new DamageReport("230425", "Test Description");
+    DamageReport updatedReport = new DamageReport("249902", "Updated Description"); 
     List<DamageReport> damageReports = maintenanceLog.GetAllReports();
     //Testing GetAllReports() - should result in a list of DamageReports, using a foreach loop to print them out.
     Console.WriteLine("Testing GetAllReports()");
@@ -266,9 +266,9 @@ void TestMemberEvent()
 void PopulateRepos()
 {
     // Adds Boats to the repo
-    boatRepo.AddBoat(new(1, "Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018")); // Boat test
-    boatRepo.AddBoat(new(2, "Dori", BoatType.SailBoat, "Shantau245", "245", "Volvo 4kMA", 14, "2014")); // Boat test
-    boatRepo.AddBoat(new(3, "Maren", BoatType.SailBoat, "Nimbus 405 Coupe", "N405", "2 x Volvo Penta 380HK", 16, "2020")); // Boat test
+    boatRepo.AddBoat(new("Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018")); // Boat test
+    boatRepo.AddBoat(new("Dori", BoatType.SailBoat, "Shantau245", "245", "Volvo 4kMA", 14, "2014")); // Boat test
+    boatRepo.AddBoat(new("Maren", BoatType.SailBoat, "Nimbus 405 Coupe", "N405", "2 x Volvo Penta 380HK", 16, "2020")); // Boat test
 
     // Adds Members to the repo
     memberRepo.CreateMember(new Member("Thomas", "123@gmail.com", "12345678"));
@@ -288,9 +288,9 @@ void PopulateRepos()
     eventRepo.AddEvent(new Event("Træningslejr", new DateTime(2024, 8, 10, 8, 00, 0), new DateTime(2024, 8, 15, 18, 00, 0), "Intensiv træningslejr for alle medlemmer")); // Event test
 
     // Add DamageReports to MaintenanceLog
-    maintenanceLog.AddReport(new DamageReport(1, "220725", "Test-Description"));
-    maintenanceLog.AddReport(new DamageReport(2, "220725", "Test-Description"));
-    maintenanceLog.AddReport(new DamageReport(3, "220725", "Test-Description"));
+    maintenanceLog.AddReport(new DamageReport("220725", "Test-Description"));
+    maintenanceLog.AddReport(new DamageReport("220725", "Test-Description"));
+    maintenanceLog.AddReport(new DamageReport("220725", "Test-Description"));
 }
 
 // Function to test Exceptions
@@ -301,7 +301,7 @@ void TestException()
     Console.WriteLine("Testing for Duplicate exception");
     try
     {
-        boatRepo.AddBoat(new(1, "Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018"));
+        boatRepo.AddBoat(new("Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018"));
     }
     catch (Exception ex)
     {
@@ -343,7 +343,7 @@ void TestException()
     Console.WriteLine("Testing for Duplicate exception");
     try
     {
-        maintenanceLog.AddReport(new DamageReport(1, "220725", "Test-Description"));
+        maintenanceLog.AddReport(new DamageReport("220725", "Test-Description"));
     }
     catch (Exception ex)
     {
