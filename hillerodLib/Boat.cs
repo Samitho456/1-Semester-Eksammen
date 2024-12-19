@@ -53,9 +53,9 @@ namespace hillerodLib
         }
 
         // Deletes DamageReport with the given Id and outputs the deleted report
-        public DamageReport DeleteDamageReport(int id, out DamageReport report)
+        public DamageReport DeleteDamageReport(DamageReport report)
         {
-            MaintenanceLog.DeleteReport(id, out report);
+            MaintenanceLog.DeleteReport(report.Id);
             return report;
         }
 
