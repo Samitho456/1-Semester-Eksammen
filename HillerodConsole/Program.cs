@@ -252,8 +252,16 @@ void PopulateRepos()
     bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(3), memberRepo.FindMemberById(4) }, new DateTime(2025, 7, 1, 11, 30, 0), new DateTime(2025, 7, 5, 12, 00, 0), "Odense", boatRepo.GetBoatById(3)));
     bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(5), memberRepo.FindMemberById(6) }, new DateTime(2025, 8, 10, 9, 00, 0), new DateTime(2025, 8, 15, 18, 00, 0), "Bornholm", boatRepo.GetBoatById(5)));
     bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(7), memberRepo.FindMemberById(8) }, new DateTime(2025, 9, 5, 10, 00, 0), new DateTime(2025, 9, 10, 15, 00, 0), "Aarhus", boatRepo.GetBoatById(7)));
-    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2025, 6, 15, 8, 00, 0), new DateTime(2025, 6, 20, 20, 00, 0), "Copenhagen", boatRepo.GetBoatById(9)));
-
+    //needs test
+    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2026, 6, 15, 8, 00, 0), new DateTime(2026, 6, 20, 20, 00, 0), "Copenhgen", boatRepo.GetBoatById(9)));
+    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2026, 6, 15, 8, 00, 0), new DateTime(2026, 6, 20, 20, 00, 0), "Copenhagen", boatRepo.GetBoatById(8)));
+    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2026, 6, 15, 8, 00, 0), new DateTime(2026, 6, 20, 20, 00, 0), "Copenhagen", boatRepo.GetBoatById(7)));
+    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2026, 6, 15, 8, 00, 0), new DateTime(2026, 6, 20, 20, 00, 0), "Copenhagen", boatRepo.GetBoatById(6)));
+    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2026, 6, 15, 8, 00, 0), new DateTime(2026, 6, 20, 20, 00, 0), "Copenhagen", boatRepo.GetBoatById(5)));
+    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2026, 6, 15, 8, 00, 0), new DateTime(2026, 6, 20, 20, 00, 0), "Copenhagen", boatRepo.GetBoatById(4)));
+    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2026, 6, 15, 8, 00, 0), new DateTime(2026, 6, 20, 20, 00, 0), "Copenhagen", boatRepo.GetBoatById(3)));
+    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2026, 6, 15, 8, 00, 0), new DateTime(2026, 6, 20, 20, 00, 0), "Copenhagen", boatRepo.GetBoatById(2)));    
+    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2026, 6, 15, 8, 00, 0), new DateTime(2026, 6, 20, 20, 00, 0), "Copenhagen", boatRepo.GetBoatById(1)));
     // Adds Events to the repo
     eventRepo.AddEvent(new Event("Båd oprydning", new DateTime(2025, 12, 1, 11, 30, 0), new DateTime(2025, 12, 1, 17, 30, 0), "Vi skal ryde op på havnen"));
     eventRepo.AddEvent(new Event("SejlTur til Odense", new DateTime(2024, 12, 1, 12, 00, 0), new DateTime(2024, 12, 7, 12, 30, 0), "Vi tager en tur til Odense"));
@@ -274,10 +282,10 @@ void PopulateRepos()
 //    Console.WriteLine(i.ToString());
 //}
 
-
-DateTime now = new(2024, 9, 8, 0, 0, 0);
-bookingRepo.UpdateAvailable(now);
-List<Boat> list = boatRepo.FindAvailableBoatsByDate(bookingRepo, new DateOnly(2025, 9, 8));
+//needs test
+// DateTime now = new(2026, 9, 8, 0, 0, 0);
+// bookingRepo.UpdateAvailable(now);
+List<Boat> list = boatRepo.FindAvailableBoatsByDate(bookingRepo, new DateOnly(2026, 9, 8));
 
 //List<Boat> list2 = boatRepo.FindAvailableBoatsByDate(bookingRepo, new DateOnly(2026, 6, 16));
 
