@@ -10,7 +10,7 @@ namespace hillerodLib
     public class Event
     {     
         // properties
-        private static int nextId = 1;
+        private static int _nextId = 1;
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime DateStart { get; set; }
@@ -21,7 +21,7 @@ namespace hillerodLib
         // Constructor without max amount of members
         public Event(string name, DateTime dateStart, DateTime dateEnd, string description)
         {
-            Id = nextId++;
+            Id = _nextId++;
             Name = name;
             DateStart = dateStart;
             DateEnd = dateEnd;
@@ -32,7 +32,7 @@ namespace hillerodLib
         // Constructor with max amount of members
         public Event(string name, DateTime dateStart, DateTime dateEnd, string description, int maxMembers)
         {
-            Id = nextId++;
+            Id = _nextId++;
             Name = name;
             DateStart = dateStart;
             DateEnd = dateEnd;

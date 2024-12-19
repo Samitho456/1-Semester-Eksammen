@@ -10,7 +10,6 @@ namespace hillerodLib
     public enum BlogType
     {
         Information,
-        Event,
-
+        Event
     }
 }

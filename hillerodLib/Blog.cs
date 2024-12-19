@@ -8,24 +8,53 @@ namespace hillerodLib
 {
     public class Blog
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public BlogType Type { get; set; }
+        private Dictionary<int, BlogItem> _blogRepo = new Dictionary<int, BlogItem>();
 
-        // Constructor
-        public Blog(int id, string name, string description, BlogType type)
+        // Add a blog with id
+        public void AddBlog(BlogItem blog)
         {
-            Id = id;
-            Name = name;
-            Description = description;
-            Type = type;
-
+            _blogRepo.TryAdd(blog.Id, blog);
         }
 
-        public override string ToString()
+        // Delete a blog by id and out delete blog
+        public bool DeleteBlog(int blogId, out BlogItem deleteBlog)
         {
-            return($"Id: { Id}" + "\n" + $"Name: { Name}" + "\n" + $"Description: {Description}" + "\n" + $"Type: {Type}");
+            return _blogRepo.Remove(blogId, out deleteBlog);
         }
+
+        // Update a blog by id, if it contains a valid id
+        public void UpdateBlog(int id, BlogItem blog)
+        {
+            if (_blogRepo.ContainsKey(id))
+            {
+                _blogRepo[id] = blog;
+            }
+        }
+
+        // Finding a blog by id, if it contains a valid id
+        // If blog id is invalid, return null
+        public BlogItem GetBlogById(int id)
+        {
+            if (_blogRepo.ContainsKey(id))
+            {
+                return _blogRepo[id];
+            }
+            return null;
+        }
+            // Finding a blog by type, and return a list of blogs by that type
+
+
+           public List<BlogItem> GetBlogByEnum(BlogType blogEnum)
+            {
+                List<BlogItem> reault = new List<BlogItem>(); //create list of the results
+                //goes through ever BlogItem and check if the BlogType is the same as the searched type
+                foreach (BlogItem b in _blogRepo.Values)
+                {
+                    if (b.Type == blogEnum)
+                        reault.Add(b);
+                }
+                return reault;
+            }
+        
     }
 }
