@@ -1,16 +1,19 @@
-﻿using hillerodLib;
+using hillerodLib.Enums;
+using hillerodLib.Exceptions;
+using hillerodLib.Models;
+using hillerodLib.Services.Repos;
 
 //intialize repos
 MemberRepo memberRepo = new MemberRepo();
 EventRepo eventRepo = new EventRepo();
 BookingRepo bookingRepo = new BookingRepo();
 BoatRepo boatRepo = new BoatRepo();
-
-PopulateRepos();
-
+MaintenanceLog maintenanceLog = new MaintenanceLog();
 
 // Creates a new instance of the EventRepo class, and adds events to the dictionary 
-//RunTest();
+RunTest();
+
+
 
 // Function that runs the user imput to test tests
 void RunTest()
@@ -20,7 +23,8 @@ void RunTest()
     Console.WriteLine("\n2. Booking/BookingRepo");
     Console.WriteLine("\n3. Events/EventRepo");
     Console.WriteLine("\n4. MemberEvent");
-    Console.WriteLine("\n5. MemberEvent");
+    Console.WriteLine("\n5. Exception and Handling");
+    Console.WriteLine("\n6. DamageReport/MaintenanceLog");
 
     Console.Write("\nEnter number: ");
     int classTest = Int32.Parse(Console.ReadLine());
@@ -45,7 +49,11 @@ void RunTest()
             break;
         case 5:
             PopulateRepos();
-            TestAdmin();
+            TestException();
+            break;
+        case 6:
+            PopulateRepos();
+            TestMaintenanceLog();
             break;
         default:
             RunTest();
@@ -205,6 +213,43 @@ void TestEvent()
     }
 }
 
+void TestMaintenanceLog()
+{
+    DamageReport damageReport = new DamageReport(4, "230425", "Test Description");
+    DamageReport updatedReport = new DamageReport(5, "249902", "Updated Description"); 
+    List<DamageReport> damageReports = maintenanceLog.GetAllReports();
+    //Testing GetAllReports() - should result in a list of DamageReports, using a foreach loop to print them out.
+    Console.WriteLine("Testing GetAllReports()");
+    foreach (var report in damageReports)
+        Console.WriteLine(report.ToString());
+
+    // Testing AddReport()
+    Console.WriteLine("Adding a new damagereport");
+    maintenanceLog.AddReport(damageReport);
+    List<DamageReport> damageReportsUpdated = maintenanceLog.GetAllReports();
+    foreach (var report in damageReportsUpdated)
+        Console.WriteLine(report.ToString());
+    // Testing FindReportByID()
+    Console.WriteLine("Testing FinReportByID(4)");
+    Console.WriteLine(maintenanceLog.FindReportById(4).ToString());
+    // Testing UpdateReport()
+    Console.WriteLine("Testing UpdateReport(2, updatedReport)");
+    maintenanceLog.UpdateReport(2, updatedReport);
+    Console.WriteLine(maintenanceLog.FindReportById(2).ToString());
+    // Testing DeleteReport()
+    Console.WriteLine("Testing DeleteReport(1)");
+    maintenanceLog.DeleteReport(1);
+    List<DamageReport> updatedReports = maintenanceLog.GetAllReports();
+    foreach(var report in updatedReports)
+        Console.WriteLine(report.ToString() );
+
+
+
+
+
+
+
+}
 // Function to test MemberEvent
 void TestMemberEvent()
 {
@@ -224,127 +269,100 @@ void TestMemberEvent()
 void PopulateRepos()
 {
     // Adds Boats to the repo
-    boatRepo.AddBoat(new("Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018"));
-    boatRepo.AddBoat(new("Dori", BoatType.SailBoat, "Shantau245", "245", "Volvo 4kMA", 14, "2014"));
-    boatRepo.AddBoat(new("Maren", BoatType.SailBoat, "Nimbus 405 Coupe", "N405", "2 x Volvo Penta 380HK", 16, "2020"));
-    boatRepo.AddBoat(new("Luna", BoatType.MotorBoat, "Sunseeker", "Sport500", "Mercury V8", 10, "2019"));
-    boatRepo.AddBoat(new("Aurora", BoatType.RowBoat, "Classic Wood", "RW100", "N/A", 2, "2015"));
-    boatRepo.AddBoat(new("Stella", BoatType.SailBoat, "Lagoon450", "450", "2 x Yanmar 4JH57", 13, "2021"));
-    boatRepo.AddBoat(new("Echo", BoatType.MotorBoat, "Bayliner", "VR6", "MerCruiser 4.5L", 8, "2020"));
-    boatRepo.AddBoat(new("Nova", BoatType.RowBoat, "EcoRow", "Eco500", "N/A", 4, "2017"));
-    boatRepo.AddBoat(new("Orion", BoatType.SailBoat, "Hanse418", "418", "Yanmar 4JH57", 12, "2022"));
-    boatRepo.AddBoat(new("Sol", BoatType.MotorBoat, "Axopar28", "28", "Mercury V6", 9, "2019"));
+    boatRepo.AddBoat(new(1, "Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018")); // Boat test
+    boatRepo.AddBoat(new(2, "Dori", BoatType.SailBoat, "Shantau245", "245", "Volvo 4kMA", 14, "2014")); // Boat test
+    boatRepo.AddBoat(new(3, "Maren", BoatType.SailBoat, "Nimbus 405 Coupe", "N405", "2 x Volvo Penta 380HK", 16, "2020")); // Boat test
 
     // Adds Members to the repo
     memberRepo.CreateMember(new Member("Thomas", "123@gmail.com", "12345678"));
     memberRepo.CreateMember(new Member("Jens", "456@gmail.com", "87654321"));
-    memberRepo.CreateMember(new Member("Anna", "anna@gmail.com", "55555555"));
-    memberRepo.CreateMember(new Member("Maria", "maria@gmail.com", "44444444"));
-    memberRepo.CreateMember(new Member("Peter", "peter@gmail.com", "33333333"));
-    memberRepo.CreateMember(new Member("Lars", "lars@gmail.com", "22222222"));
-    memberRepo.CreateMember(new Member("Sophie", "sophie@gmail.com", "11111111"));
-    memberRepo.CreateMember(new Member("Emma", "emma@gmail.com", "66666666"));
-    memberRepo.CreateMember(new Member("Olivia", "olivia@gmail.com", "77777777"));
-    memberRepo.CreateMember(new Member("Oscar", "oscar@gmail.com", "88888888"));
+    memberRepo.CreateMember(new Member("thomas", "798@gmail.com", "94629562"));
+    memberRepo.CreateMember(new Member("dsfg", "asdfasdf8@gmail.com", "834257234"));
 
-    // Adds Bookings to the repo
-    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(1), memberRepo.FindMemberById(2) }, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Ven", boatRepo.GetBoatById(1)));
-    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(3), memberRepo.FindMemberById(4) }, new DateTime(2025, 7, 1, 11, 30, 0), new DateTime(2025, 7, 5, 12, 00, 0), "Odense", boatRepo.GetBoatById(3)));
-    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(5), memberRepo.FindMemberById(6) }, new DateTime(2025, 8, 10, 9, 00, 0), new DateTime(2025, 8, 15, 18, 00, 0), "Bornholm", boatRepo.GetBoatById(5)));
-    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(7), memberRepo.FindMemberById(8) }, new DateTime(2025, 9, 5, 10, 00, 0), new DateTime(2025, 9, 10, 15, 00, 0), "Aarhus", boatRepo.GetBoatById(7)));
-    //needs test
-    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2026, 6, 15, 8, 00, 0), new DateTime(2026, 6, 20, 20, 00, 0), "Copenhgen", boatRepo.GetBoatById(9)));
-    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2026, 6, 15, 8, 00, 0), new DateTime(2026, 6, 20, 20, 00, 0), "Copenhagen", boatRepo.GetBoatById(8)));
-    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2026, 6, 15, 8, 00, 0), new DateTime(2026, 6, 20, 20, 00, 0), "Copenhagen", boatRepo.GetBoatById(7)));
-    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2026, 6, 15, 8, 00, 0), new DateTime(2026, 6, 20, 20, 00, 0), "Copenhagen", boatRepo.GetBoatById(6)));
-    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2026, 6, 15, 8, 00, 0), new DateTime(2026, 6, 20, 20, 00, 0), "Copenhagen", boatRepo.GetBoatById(5)));
-    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2026, 6, 15, 8, 00, 0), new DateTime(2026, 6, 20, 20, 00, 0), "Copenhagen", boatRepo.GetBoatById(4)));
-    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2026, 6, 15, 8, 00, 0), new DateTime(2026, 6, 20, 20, 00, 0), "Copenhagen", boatRepo.GetBoatById(3)));
-    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2026, 6, 15, 8, 00, 0), new DateTime(2026, 6, 20, 20, 00, 0), "Copenhagen", boatRepo.GetBoatById(2)));    
-    bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(9), memberRepo.FindMemberById(10) }, new DateTime(2026, 6, 15, 8, 00, 0), new DateTime(2026, 6, 20, 20, 00, 0), "Copenhagen", boatRepo.GetBoatById(1)));
-    // Adds Events to the repo
-    eventRepo.AddEvent(new Event("Båd oprydning", new DateTime(2025, 12, 1, 11, 30, 0), new DateTime(2025, 12, 1, 17, 30, 0), "Vi skal ryde op på havnen"));
-    eventRepo.AddEvent(new Event("SejlTur til Odense", new DateTime(2024, 12, 1, 12, 00, 0), new DateTime(2024, 12, 7, 12, 30, 0), "Vi tager en tur til Odense"));
-    eventRepo.AddEvent(new Event("Kamp", new DateTime(2025, 7, 22, 12, 00, 0), new DateTime(2025, 7, 29, 12, 00, 0), "Vi kæmper om Danmarks mesterskaberne"));
-    eventRepo.AddEvent(new Event("Sommerfest", new DateTime(2024, 6, 15, 15, 00, 0), new DateTime(2024, 6, 15, 23, 00, 0), "Vi holder en hyggelig sommerfest med grill og musik"));
-    eventRepo.AddEvent(new Event("Træningslejr", new DateTime(2024, 8, 10, 8, 00, 0), new DateTime(2024, 8, 15, 18, 00, 0), "Intensiv træningslejr for alle medlemmer"));
-    eventRepo.AddEvent(new Event("Forårstur", new DateTime(2025, 4, 15, 10, 00, 0), new DateTime(2025, 4, 20, 18, 00, 0), "Fælles sejltur i foråret"));
-    eventRepo.AddEvent(new Event("Havnerundfart", new DateTime(2024, 11, 20, 14, 00, 0), new DateTime(2024, 11, 20, 18, 00, 0), "Guidet tur rundt i havnen"));
-    eventRepo.AddEvent(new Event("Fisketur", new DateTime(2024, 9, 5, 6, 00, 0), new DateTime(2024, 9, 5, 15, 00, 0), "Fisketur for hele familien"));
-    eventRepo.AddEvent(new Event("Vintersamling", new DateTime(2025, 1, 15, 17, 00, 0), new DateTime(2025, 1, 15, 22, 00, 0), "Indendørs hygge og foredrag"));
-    eventRepo.AddEvent(new Event("Julefrokost", new DateTime(2024, 12, 20, 18, 00, 0), new DateTime(2024, 12, 20, 23, 59, 0), "Julehygge og mad med medlemmer"));
+    // Add booking to the repo
+    //bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(1), memberRepo.FindMemberById(2) }, new DateTime(2025, 5, 1, 11, 30, 0), new DateTime(2025, 5, 5, 12, 00, 0), "Ven", boatRepo.GetBoatById(1)));
+    //bookingRepo.AddBooking(new Booking(new List<Member>() { memberRepo.FindMemberById(3), memberRepo.FindMemberById(4) }, new DateTime(2025, 7, 1, 11, 30, 0), new DateTime(2025, 7, 5, 12, 00, 0), "Odense", boatRepo.GetBoatById(3)));
 
+    //add events to repo
+    eventRepo.AddEvent(new Event("Båd oprydning", new DateTime(2025, 12, 1, 11, 30, 0), new DateTime(2025, 12, 1, 17, 30, 0), "Vi skal ryder op på havnen")); // Event test
+    eventRepo.AddEvent(new Event("SejlTur til Odense", new DateTime(2024, 12, 1, 12, 00, 0), new DateTime(2024, 12, 7, 12, 30, 0), "Vi tager en tur til Odense")); // Event test
+    eventRepo.AddEvent(new Event("Kamp", new DateTime(2025, 7, 22, 12, 00, 0), new DateTime(2025, 7, 29, 12, 00, 0), "Vi kæmper om Danmarks mesterskaberne")); // Event test
+    eventRepo.AddEvent(new Event("Sommerfest", new DateTime(2024, 6, 15, 15, 00, 0), new DateTime(2024, 6, 15, 23, 00, 0), "Vi holder en hyggelig sommerfest med grill og musik")); // Event test
+    eventRepo.AddEvent(new Event("Træningslejr", new DateTime(2024, 8, 10, 8, 00, 0), new DateTime(2024, 8, 15, 18, 00, 0), "Intensiv træningslejr for alle medlemmer")); // Event test
+
+    // Add DamageReports to MaintenanceLog
+    maintenanceLog.AddReport(new DamageReport(1, "220725", "Test-Description"));
+    maintenanceLog.AddReport(new DamageReport(2, "220725", "Test-Description"));
+    maintenanceLog.AddReport(new DamageReport(3, "220725", "Test-Description"));
 }
 
-
-//foreach(var i in bookingRepo.GetAllBookings())
-//{
-//    Console.WriteLine(i.ToString());
-//}
-
-//needs test
-// DateTime now = new(2026, 9, 8, 0, 0, 0);
-// bookingRepo.UpdateAvailable(now);
-List<Boat> list = boatRepo.FindAvailableBoatsByDate(bookingRepo, new DateOnly(2026, 9, 8));
-
-//List<Boat> list2 = boatRepo.FindAvailableBoatsByDate(bookingRepo, new DateOnly(2026, 6, 16));
-
-
-foreach (Boat b in list)
+// Function to test Exceptions
+void TestException()
 {
-    Console.WriteLine(b.ToString());
+    #region Exception and Handling
+    // Adding a duplicate boat (should result in exception)
+    Console.WriteLine("Testing for Duplicate exception");
+    try
+    {
+        boatRepo.AddBoat(new(1, "Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018"));
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    // Finding a boat with a non-existent ID (Should result in exception)
+    Console.WriteLine("Testing for non-existent ID");
+    try
+    {
+        boatRepo.GetBoatById(99);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    // Adding a duplicate event (should result in an exception)
+    Console.WriteLine("Testing for Duplicate exception");
+    try
+    {
+        Event duplicateEvent = new Event("Båd oprydning", new DateTime(2025, 12, 1, 11, 30, 0), new DateTime(2025, 12, 1, 17, 30, 0), "Vi skal ryder op på havnen");
+        duplicateEvent.Id = 1;
+        eventRepo.AddEvent(duplicateEvent);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    // Finding an Event with a non-existent ID (Should result in exception)
+    Console.WriteLine("Testing for non-existent ID");
+    try
+    {
+        eventRepo.GetEventById(99);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    // Adding a duplicate DamageReport (should result in an exception)
+    Console.WriteLine("Testing for Duplicate exception");
+    try
+    {
+        maintenanceLog.AddReport(new DamageReport(1, "220725", "Test-Description"));
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    // Finding an DamageReport with a non-existent ID (Should result in exception)
+    Console.WriteLine("Testing for non-existent ID");
+    try
+    {
+        maintenanceLog.FindReportById(99);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+
+    #endregion
 }
-Console.WriteLine();
-//foreach (Boat boat in list2)
-//{
-//    Console.WriteLine(boat.ToString());
-//}
 
-
-// Function to test Admin
-void TestAdmin()
-{
-    #region Admin
-    // Create repositories
-    EventRepo adminEventRepo = new EventRepo();
-    BoatRepo adminBoatRepo = new BoatRepo();
-    MemberRepo adminMemberRepo = new MemberRepo();
-    MaintenanceLog adminMaintenanceLog = new MaintenanceLog();
-    // Creates an Admin object
-    Admin admin = new Admin("Henrik", "758@gmail.com", "98723141");
-
-    // Create objects for testing
-    #region Boat Objects
-    Boat adminBoat1 = new Boat("Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018");
-    adminBoat1.MaintenanceLog = adminMaintenanceLog;
-    Boat updatedBoat = new Boat("Dori", BoatType.SailBoat, "Shantau245", "245", "Volvo 4kMA", 14, "2014");
-    Boat deletionBoat = new Boat("Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018");
-    #endregion
-    #region Report Objects
-    DamageReport adminTestReport = new DamageReport("110125", "Test Report");
-    DamageReport updatedReport = new DamageReport("20251607", "Updated test report");
-    DamageReport deletionReport = new DamageReport("12132025", "Test Description");
-    #endregion
-    #region Member Objects
-    Member adminMember = new Member("Thomas", "123@gmail.com", "12345678");
-    Member updatedMember = new Member("Marley", "Marley@gmail.com", "27272727");
-    Member deletionMember = new Member("Zikki", "zikke@gmail.com", "12132025");
-    #endregion
-    #region Event Objects
-    Event testEvent = new Event("Test Event", new DateTime(2025, 1, 1), new DateTime(2025, 1, 2), "Test Description");
-    Event updatedEvent = new Event("Updated Event", new DateTime(2025, 2, 1), new DateTime(2025, 2, 2), "Updated Description");
-    Event deletionEvent = new Event("Event for deletion", new DateTime(2025, 5, 1), new DateTime(2025, 6, 1), "Event for deletion test");
-    #endregion
-    #region Booking objects
-    Booking adminTestBooking = new Booking(new List<Member>() { adminMember }, new DateTime(2025, 1, 1), new DateTime(2025, 2, 1), "Test destanation", adminBoat1);
-    #endregion
-    Console.WriteLine("Testing Admin Class Methods with Exception Handling\n");
-    #region Event Exception Testing 
-    // Test Event Methods
-    Console.WriteLine("---- Event Methods ----");
-
-    // Add Event
-    Console.WriteLine("Adding Event...");
-    #endregion
-    #endregion
-}
