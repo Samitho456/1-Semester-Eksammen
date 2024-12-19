@@ -1,4 +1,5 @@
 using hillerodLib;
+using System.Reflection.Metadata.Ecma335;
 
 //intialize repos
 MemberRepo memberRepo = new MemberRepo();
@@ -18,11 +19,10 @@ void RunTest()
     Console.WriteLine("\n2. Booking/BookingRepo");
     Console.WriteLine("\n3. Events/EventRepo");
     Console.WriteLine("\n4. MemberEvent");
-    Console.WriteLine("\n5. Admin");
-    Console.WriteLine("\n6. TestFindBookingByAvialable");
-    Console.WriteLine("\n7. Exception and Handling");
-    Console.WriteLine("\n8. DamageReport/MaintenanceLog");
-    Console.WriteLine("\n9. stop");
+    Console.WriteLine("\n5. TestFindBookingByAvialable");
+    Console.WriteLine("\n6. Exception and Handling");
+    Console.WriteLine("\n7. DamageReport/MaintenanceLog");
+    Console.WriteLine("\n8. stop");
 
     Console.Write("\nEnter number: ");
     int classTest = Int32.Parse(Console.ReadLine());
@@ -50,21 +50,18 @@ void RunTest()
             RunTest();
             break;
         case 5:
-            PopulateRepos()
-            TestAdmin();
-            RunTest();
-            break;
-        case 6:
             PopulateRepos();
             TestFindBookingByAvialable();
             RunTest();
             break;
-        case 7:
+        case 6:
             TestException();
+            RunTest();
             break;
-        case 8:
+        case 7:
             PopulateRepos();
             TestMaintenanceLog();
+            RunTest();
             break;
         case 9:
             break;
@@ -278,20 +275,17 @@ void TestMemberEvent()
     Console.WriteLine();
 }
 
-
-// Function to test Admin
-void TestAdmin()
-
 // Function to test Exceptions
 void TestException()
-
 {
     #region Exception and Handling
     // Adding a duplicate boat (should result in exception)
     Console.WriteLine("Testing for Duplicate exception");
     try
     {
-        boatRepo.AddBoat(new("Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018"));
+        Boat duplicateBoat = new Boat("Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018");
+        duplicateBoat.Id = 1;
+        boatRepo.AddBoat(duplicateBoat);
     }
     catch (Exception ex)
     {
@@ -333,7 +327,9 @@ void TestException()
     Console.WriteLine("Testing for Duplicate exception");
     try
     {
-        maintenanceLog.AddReport(new DamageReport("220725", "Test-Description"));
+        DamageReport duplicateReport = new DamageReport("220725", "Test-Description");
+        duplicateReport.Id = 1;
+        maintenanceLog.AddReport(duplicateReport);
     }
     catch (Exception ex)
     {
