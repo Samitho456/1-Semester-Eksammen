@@ -61,7 +61,7 @@ namespace hillerodLib
 
         public override string ToString()
         {
-            return $"Id: {Id}, Name: {Name}, Type: {Type}, IsAveable: {IsAvailable}, Model: {Model}, Sail Number: {SailNumber}, Engine: {Engine}, Measures: {Measures}, Build year: {BuildingYear}";
+            return $"Id: {Id}, Name: {Name}, Type: {Type}, IsAvailable: {IsAvailable}, Model: {Model}, Sail Number: {SailNumber}, Engine: {Engine}, Measures: {Measures}, Build year: {BuildingYear}";
         }
     }
 }

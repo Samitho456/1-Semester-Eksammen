@@ -81,14 +81,14 @@
 
         public List<Boat> FindAvailableBoatsByDate(BookingRepo bookingRepo, DateOnly date)
         {
-            List<Boat> result = new List<Boat>();
-
-            foreach(Booking b in bookingRepo.SearchBoatsNotBookedOn(date))
+            bookingRepo.UpdateAvailableDO(date);
+            List<Boat> availableBoats = new List<Boat>();
+            foreach (Boat b in _boatList.Values)
             {
-                if (_boatList.ContainsKey(b.Boat.Id))
-                result.Add(b.Boat);
+                if (b.IsAvailable)
+                availableBoats.Add(b);
             }
-            return result;
+            return availableBoats;
         }
     }
 }

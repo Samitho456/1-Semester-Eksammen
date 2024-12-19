@@ -16,6 +16,7 @@ namespace hillerodLib
         public DateTime Arrival { get; set; }
         public string Destanation { get; set; }
         public Boat Boat { get; set; }
+        public bool Active { get; set; }
 
         // Constructor
         public Booking(List<Member> members, DateTime depature, DateTime arrival, string destanation, Boat boat)
@@ -26,7 +27,7 @@ namespace hillerodLib
             Arrival = arrival;
             Destanation = destanation;
             Boat = boat;
-            boat.IsAvailable = false;
+            Active = true;
         }
 
         public override string ToString()
