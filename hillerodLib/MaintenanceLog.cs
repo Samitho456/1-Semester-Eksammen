@@ -24,10 +24,10 @@ namespace hillerodLib
         }
 
         // Deletes a report from the Maintenance Log
-        public bool DeleteReport(int id, out DamageReport report)
+        public bool DeleteReport(int id)
         {
             // Ensures valid arguments using the FindReportById method
-            FindReportById(id);
+            DamageReport report = FindReportById(id);
             return _log.Remove(id, out report);
         }
 
@@ -35,9 +35,9 @@ namespace hillerodLib
         public bool UpdateReport(int id, DamageReport report) 
         {
             // Ensures valid arguments using the FindReportById method
-            DamageReport oldReport = FindReportById(id); // Throws exeption if no Report found
+            FindReportById(id); // Throws exeption if no Report found
             report.Id = id; // Change new report Id to old Id
-            oldReport = report; // Update oldReport to new report
+            _log[id] = report; // Update oldReport to new report
             return true;
         }
 

@@ -1,15 +1,13 @@
-﻿using hillerodLib;
+using hillerodLib;
 
 //intialize repos
 MemberRepo memberRepo = new MemberRepo();
 EventRepo eventRepo = new EventRepo();
 BookingRepo bookingRepo = new BookingRepo();
 BoatRepo boatRepo = new BoatRepo();
+MaintenanceLog maintenanceLog = new MaintenanceLog();
 
-//PopulateRepos();
-
-
-// Creates a new instance of the EventRepo class, and adds events to the dictionary 
+ 
 RunTest();
 
 // Function that runs the user imput to test tests
@@ -22,7 +20,9 @@ void RunTest()
     Console.WriteLine("\n4. MemberEvent");
     Console.WriteLine("\n5. Admin");
     Console.WriteLine("\n6. TestFindBookingByAvialable");
-    Console.WriteLine("\n7. stop");
+    Console.WriteLine("\n7. Exception and Handling");
+    Console.WriteLine("\n8. DamageReport/MaintenanceLog");
+    Console.WriteLine("\n9. stop");
 
     Console.Write("\nEnter number: ");
     int classTest = Int32.Parse(Console.ReadLine());
@@ -50,7 +50,7 @@ void RunTest()
             RunTest();
             break;
         case 5:
-            PopulateRepos();
+            PopulateRepos()
             TestAdmin();
             RunTest();
             break;
@@ -60,6 +60,13 @@ void RunTest()
             RunTest();
             break;
         case 7:
+            TestException();
+            break;
+        case 8:
+            PopulateRepos();
+            TestMaintenanceLog();
+            break;
+        case 9:
             break;
         default:
             RunTest();
@@ -219,6 +226,43 @@ void TestEvent()
     }
 }
 
+void TestMaintenanceLog()
+{
+    DamageReport damageReport = new DamageReport("230425", "Test Description");
+    DamageReport updatedReport = new DamageReport("249902", "Updated Description"); 
+    List<DamageReport> damageReports = maintenanceLog.GetAllReports();
+    //Testing GetAllReports() - should result in a list of DamageReports, using a foreach loop to print them out.
+    Console.WriteLine("Testing GetAllReports()");
+    foreach (var report in damageReports)
+        Console.WriteLine(report.ToString());
+
+    // Testing AddReport()
+    Console.WriteLine("Adding a new damagereport");
+    maintenanceLog.AddReport(damageReport);
+    List<DamageReport> damageReportsUpdated = maintenanceLog.GetAllReports();
+    foreach (var report in damageReportsUpdated)
+        Console.WriteLine(report.ToString());
+    // Testing FindReportByID()
+    Console.WriteLine("Testing FinReportByID(4)");
+    Console.WriteLine(maintenanceLog.FindReportById(4).ToString());
+    // Testing UpdateReport()
+    Console.WriteLine("Testing UpdateReport(2, updatedReport)");
+    maintenanceLog.UpdateReport(2, updatedReport);
+    Console.WriteLine(maintenanceLog.FindReportById(2).ToString());
+    // Testing DeleteReport()
+    Console.WriteLine("Testing DeleteReport(1)");
+    maintenanceLog.DeleteReport(1);
+    List<DamageReport> updatedReports = maintenanceLog.GetAllReports();
+    foreach(var report in updatedReports)
+        Console.WriteLine(report.ToString() );
+
+
+
+
+
+
+
+}
 // Function to test MemberEvent
 void TestMemberEvent()
 {
@@ -234,51 +278,78 @@ void TestMemberEvent()
     Console.WriteLine();
 }
 
+
 // Function to test Admin
 void TestAdmin()
+
+// Function to test Exceptions
+void TestException()
+
 {
-    #region Admin
-    // Create repositories
-    EventRepo adminEventRepo = new EventRepo();
-    BoatRepo adminBoatRepo = new BoatRepo();
-    MemberRepo adminMemberRepo = new MemberRepo();
-    MaintenanceLog adminMaintenanceLog = new MaintenanceLog();
-    // Creates an Admin object
-    Admin admin = new Admin("Henrik", "758@gmail.com", "98723141");
+    #region Exception and Handling
+    // Adding a duplicate boat (should result in exception)
+    Console.WriteLine("Testing for Duplicate exception");
+    try
+    {
+        boatRepo.AddBoat(new("Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018"));
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    // Finding a boat with a non-existent ID (Should result in exception)
+    Console.WriteLine("Testing for non-existent ID");
+    try
+    {
+        boatRepo.GetBoatById(99);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    // Adding a duplicate event (should result in an exception)
+    Console.WriteLine("Testing for Duplicate exception");
+    try
+    {
+        Event duplicateEvent = new Event("Båd oprydning", new DateTime(2025, 12, 1, 11, 30, 0), new DateTime(2025, 12, 1, 17, 30, 0), "Vi skal ryder op på havnen");
+        duplicateEvent.Id = 1;
+        eventRepo.AddEvent(duplicateEvent);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    // Finding an Event with a non-existent ID (Should result in exception)
+    Console.WriteLine("Testing for non-existent ID");
+    try
+    {
+        eventRepo.GetEventById(99);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    // Adding a duplicate DamageReport (should result in an exception)
+    Console.WriteLine("Testing for Duplicate exception");
+    try
+    {
+        maintenanceLog.AddReport(new DamageReport("220725", "Test-Description"));
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    // Finding an DamageReport with a non-existent ID (Should result in exception)
+    Console.WriteLine("Testing for non-existent ID");
+    try
+    {
+        maintenanceLog.FindReportById(99);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
 
-    // Create objects for testing
-    #region Boat Objects
-    Boat adminBoat1 = new Boat("Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018");
-    adminBoat1.MaintenanceLog = adminMaintenanceLog;
-    Boat updatedBoat = new Boat("Dori", BoatType.SailBoat, "Shantau245", "245", "Volvo 4kMA", 14, "2014");
-    Boat deletionBoat = new Boat("Molly", BoatType.SailBoat, "Beneteau395", "395", "Yanmar 4JH4", 12, "2018");
-    #endregion
-    #region Report Objects
-    DamageReport adminTestReport = new DamageReport("110125", "Test Report");
-    DamageReport updatedReport = new DamageReport("20251607", "Updated test report");
-    DamageReport deletionReport = new DamageReport("12132025", "Test Description");
-    #endregion
-    #region Member Objects
-    Member adminMember = new Member("Thomas", "123@gmail.com", "12345678");
-    Member updatedMember = new Member("Marley", "Marley@gmail.com", "27272727");
-    Member deletionMember = new Member("Zikki", "zikke@gmail.com", "12132025");
-    #endregion
-    #region Event Objects
-    Event testEvent = new Event("Test Event", new DateTime(2025, 1, 1), new DateTime(2025, 1, 2), "Test Description");
-    Event updatedEvent = new Event("Updated Event", new DateTime(2025, 2, 1), new DateTime(2025, 2, 2), "Updated Description");
-    Event deletionEvent = new Event("Event for deletion", new DateTime(2025, 5, 1), new DateTime(2025, 6, 1), "Event for deletion test");
-    #endregion
-    #region Booking objects
-    Booking adminTestBooking = new Booking(new List<Member>() { adminMember }, new DateTime(2025, 1, 1), new DateTime(2025, 2, 1), "Test destanation", adminBoat1);
-    #endregion
-    Console.WriteLine("Testing Admin Class Methods with Exception Handling\n");
-    #region Event Exception Testing 
-    // Test Event Methods
-    Console.WriteLine("---- Event Methods ----");
-
-    // Add Event
-    Console.WriteLine("Adding Event...");
-    #endregion
     #endregion
 }
 
@@ -329,4 +400,9 @@ void PopulateRepos()
     eventRepo.AddEvent(new Event("SejlTur til Odense", new DateTime(2024, 12, 1, 12, 00, 0), new DateTime(2024, 12, 7, 12, 30, 0), "Vi tager en tur til Odense"));
     eventRepo.AddEvent(new Event("Kamp", new DateTime(2025, 7, 22, 12, 00, 0), new DateTime(2025, 7, 29, 12, 00, 0), "Vi kæmper om Danmarks mesterskaberne"));
     eventRepo.AddEvent(new Event("Sommerfest", new DateTime(2024, 6, 15, 15, 00, 0), new DateTime(2024, 6, 15, 23, 00, 0), "Vi holder en hyggelig sommerfest med grill og musik"));
+      
+    // Add DamageReports to MaintenanceLog
+    maintenanceLog.AddReport(new DamageReport("220725", "Test-Description"));
+    maintenanceLog.AddReport(new DamageReport("220725", "Test-Description"));
+    maintenanceLog.AddReport(new DamageReport("220725", "Test-Description"));
 }
