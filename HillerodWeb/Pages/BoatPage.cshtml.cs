@@ -1,5 +1,4 @@
-using hillerodLib.Models;
-using hillerodLib.Services.Repos;
+using hillerodLib;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
