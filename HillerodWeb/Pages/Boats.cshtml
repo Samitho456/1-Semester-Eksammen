@@ -1,0 +1,53 @@
+﻿@page
+@model HillerodWeb.Pages.BoatPages.BoatsModel
+@{
+    ViewData["Title"] = "Boat List";
+}
+<link rel="stylesheet" href="~/css/Boats.css" />
+
+<h1>Boat List</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Model</th>
+            <th>Sail Number</th>
+            <th>Engine</th>
+            <th>Measures</th>
+            <th>Building Year</th>
+            <th>Available</th>
+            <th>>Booking</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var boat in Model.Boats)
+        {
+            <tr>
+                <td>@boat.Id</td>
+                <td><a asp-page="/BoatPages/BoatPage" asp-route-id="@boat.Id">@boat.Name</a></td>
+                <td>@boat.Type</td>
+                <td>@boat.Model</td>
+                <td>@boat.SailNumber</td>
+                <td>@boat.Engine</td>
+                <td>@boat.Measures</td>
+                <td>@boat.BuildingYear</td>
+                <td>@(boat.IsAvailable ? "Yes" : "No")</td>
+                <td>
+                    @if (boat.IsAvailable)
+                        {
+        <!-- Active button if boat is available -->
+                        <a href="/BoatPages/BoatPage/@boat.Id" class="book-button">Book Boat</a>
+                        }
+                    else
+                        {
+        <!-- Disabled button if boat is not available -->
+                             <button class="book-button" disabled>Not Available</button>
+                        }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
